@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hyperbolic Completions API — Completions
+  description: 'Hyperbolic Completions API — Completions. 1 operations. Lead operation: Hyperbolic Create A
+    Completion. Self-contained Naftiko capability covering one Hyperbolic business surface.'
+  tags:
+  - Hyperbolic
+  - Completions
+  - Inference
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    HYPERBOLIC_API_KEY: HYPERBOLIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: inference-completions
+    baseUri: https://api.hyperbolic.xyz
+    description: Hyperbolic Completions business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-completions
+      path: /v1/completions
+      operations:
+      - name: createcompletion
+        method: POST
+        description: Hyperbolic Create A Completion
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON) — base-model text completion request.
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.HYPERBOLIC_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: inference-completions-rest
+    port: 8080
+    description: REST adapter for Hyperbolic Completions.
+    resources:
+    - path: /v1/completions
+      name: v1-completions
+      description: REST surface for /v1/completions.
+      operations:
+      - method: POST
+        name: createcompletion
+        description: Hyperbolic Create A Completion
+        call: inference-completions.createcompletion
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: inference-completions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hyperbolic Completions.
+    tools:
+    - name: hyperbolic-create-completion
+      description: Hyperbolic Create A Completion
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: inference-completions.createcompletion
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

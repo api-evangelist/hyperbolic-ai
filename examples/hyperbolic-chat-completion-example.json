@@ -1,0 +1,41 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.hyperbolic.xyz/v1/chat/completions",
+    "headers": {
+      "Authorization": "Bearer YOUR_HYPERBOLIC_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "model": "deepseek-ai/DeepSeek-V3",
+      "messages": [
+        { "role": "system", "content": "You are an API Evangelist research assistant." },
+        { "role": "user", "content": "Explain prompt caching in two sentences." }
+      ],
+      "max_tokens": 256,
+      "temperature": 0.7,
+      "stream": false
+    }
+  },
+  "response": {
+    "id": "chatcmpl-abc123",
+    "object": "chat.completion",
+    "created": 1748160000,
+    "model": "deepseek-ai/DeepSeek-V3",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Prompt caching stores reusable portions of a prompt server-side so identical prefixes do not have to be re-encoded on every request. This lowers latency and cost when an application repeatedly sends the same long system prompts, tools, or RAG context."
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 28,
+      "completion_tokens": 51,
+      "total_tokens": 79
+    }
+  }
+}

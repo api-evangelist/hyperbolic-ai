@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.hyperbolic.xyz/v1/image/generation",
+    "headers": {
+      "Authorization": "Bearer YOUR_HYPERBOLIC_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "model_name": "SDXL1.0-base",
+      "prompt": "A photorealistic cyberpunk cat wearing sunglasses",
+      "negative_prompt": "blurry, low quality, text",
+      "steps": 30,
+      "cfg_scale": 7.5,
+      "height": 1024,
+      "width": 1024,
+      "n": 1
+    }
+  },
+  "response": {
+    "images": [
+      {
+        "image": "iVBORw0KGgoAAAANSUhEUgAA... (base64-truncated)",
+        "seed": 42
+      }
+    ],
+    "inference_time": 3.42
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "hyperbolic": "https://api.hyperbolic.xyz/v1/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "ChatCompletionRequest": {
+      "@id": "hyperbolic:ChatCompletionRequest",
+      "@context": {
+        "model": { "@id": "hyperbolic:ChatCompletionRequest/model", "@type": "xsd:string" },
+        "messages": { "@id": "hyperbolic:ChatCompletionRequest/messages", "@container": "@list" },
+        "max_tokens": { "@id": "hyperbolic:ChatCompletionRequest/maxTokens", "@type": "xsd:integer" },
+        "temperature": { "@id": "hyperbolic:ChatCompletionRequest/temperature", "@type": "xsd:decimal" },
+        "top_p": { "@id": "hyperbolic:ChatCompletionRequest/topP", "@type": "xsd:decimal" },
+        "top_k": { "@id": "hyperbolic:ChatCompletionRequest/topK", "@type": "xsd:integer" },
+        "stream": { "@id": "hyperbolic:ChatCompletionRequest/stream", "@type": "xsd:boolean" },
+        "stop": { "@id": "hyperbolic:ChatCompletionRequest/stop" },
+        "presence_penalty": { "@id": "hyperbolic:ChatCompletionRequest/presencePenalty", "@type": "xsd:decimal" },
+        "frequency_penalty": { "@id": "hyperbolic:ChatCompletionRequest/frequencyPenalty", "@type": "xsd:decimal" },
+        "seed": { "@id": "hyperbolic:ChatCompletionRequest/seed", "@type": "xsd:integer" },
+        "response_format": { "@id": "hyperbolic:ChatCompletionRequest/responseFormat" },
+        "tools": { "@id": "hyperbolic:ChatCompletionRequest/tools", "@container": "@list" },
+        "tool_choice": { "@id": "hyperbolic:ChatCompletionRequest/toolChoice" }
+      }
+    },
+
+    "ChatMessage": {
+      "@id": "hyperbolic:ChatMessage",
+      "@context": {
+        "role": { "@id": "hyperbolic:ChatMessage/role", "@type": "xsd:string" },
+        "content": { "@id": "hyperbolic:ChatMessage/content" },
+        "name": { "@id": "schema:name", "@type": "xsd:string" },
+        "tool_call_id": { "@id": "hyperbolic:ChatMessage/toolCallId", "@type": "xsd:string" },
+        "tool_calls": { "@id": "hyperbolic:ChatMessage/toolCalls", "@container": "@list" }
+      }
+    },
+
+    "ChatCompletionResponse": {
+      "@id": "hyperbolic:ChatCompletionResponse",
+      "@context": {
+        "id": { "@id": "hyperbolic:ChatCompletionResponse/id", "@type": "xsd:string" },
+        "object": { "@id": "hyperbolic:ChatCompletionResponse/object", "@type": "xsd:string" },
+        "created": { "@id": "dcterms:created", "@type": "xsd:integer" },
+        "model": { "@id": "hyperbolic:ChatCompletionResponse/model", "@type": "xsd:string" },
+        "choices": { "@id": "hyperbolic:ChatCompletionResponse/choices", "@container": "@list" },
+        "usage": { "@id": "hyperbolic:ChatCompletionResponse/usage", "@type": "hyperbolic:Usage" }
+      }
+    },
+
+    "Usage": {
+      "@id": "hyperbolic:Usage",
+      "@context": {
+        "prompt_tokens": { "@id": "hyperbolic:Usage/promptTokens", "@type": "xsd:integer" },
+        "completion_tokens": { "@id": "hyperbolic:Usage/completionTokens", "@type": "xsd:integer" },
+        "total_tokens": { "@id": "hyperbolic:Usage/totalTokens", "@type": "xsd:integer" }
+      }
+    },
+
+    "ImageGenerationRequest": {
+      "@id": "hyperbolic:ImageGenerationRequest",
+      "@context": {
+        "model_name": { "@id": "hyperbolic:ImageGenerationRequest/modelName", "@type": "xsd:string" },
+        "prompt": { "@id": "hyperbolic:ImageGenerationRequest/prompt", "@type": "xsd:string" },
+        "negative_prompt": { "@id": "hyperbolic:ImageGenerationRequest/negativePrompt", "@type": "xsd:string" },
+        "steps": { "@id": "hyperbolic:ImageGenerationRequest/steps", "@type": "xsd:integer" },
+        "cfg_scale": { "@id": "hyperbolic:ImageGenerationRequest/cfgScale", "@type": "xsd:decimal" },
+        "height": { "@id": "hyperbolic:ImageGenerationRequest/height", "@type": "xsd:integer" },
+        "width": { "@id": "hyperbolic:ImageGenerationRequest/width", "@type": "xsd:integer" },
+        "seed": { "@id": "hyperbolic:ImageGenerationRequest/seed", "@type": "xsd:integer" }
+      }
+    },
+
+    "AudioGenerationRequest": {
+      "@id": "hyperbolic:AudioGenerationRequest",
+      "@context": {
+        "text": { "@id": "hyperbolic:AudioGenerationRequest/text", "@type": "xsd:string" },
+        "speed": { "@id": "hyperbolic:AudioGenerationRequest/speed", "@type": "xsd:decimal" },
+        "language": { "@id": "hyperbolic:AudioGenerationRequest/language", "@type": "xsd:string" },
+        "voice": { "@id": "hyperbolic:AudioGenerationRequest/voice", "@type": "xsd:string" }
+      }
+    },
+
+    "Model": {
+      "@id": "hyperbolic:Model",
+      "@context": {
+        "id": { "@id": "schema:identifier", "@type": "xsd:string" },
+        "object": { "@id": "hyperbolic:Model/object", "@type": "xsd:string" },
+        "created": { "@id": "dcterms:created", "@type": "xsd:integer" },
+        "owned_by": { "@id": "schema:provider", "@type": "xsd:string" }
+      }
+    },
+
+    "ErrorResponse": {
+      "@id": "hyperbolic:ErrorResponse",
+      "@context": {
+        "error": { "@id": "hyperbolic:ErrorResponse/error" }
+      }
+    }
+  }
+}

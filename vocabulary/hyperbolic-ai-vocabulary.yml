@@ -1,0 +1,91 @@
+specification: API Evangelist Vocabulary
+specificationVersion: '0.1'
+provider: Hyperbolic
+providerId: hyperbolic-ai
+created: '2026-05-25'
+modified: '2026-05-25'
+description: Operational and capability vocabulary for the Hyperbolic Serverless Inference and GPU
+  Marketplace platform.
+domains:
+  - id: inference
+    name: Serverless Inference
+    description: OpenAI-compatible REST surface serving 25+ open-source LLMs, vision, image, and audio
+      models from https://api.hyperbolic.xyz/v1.
+    terms:
+      - chat completion
+      - completion
+      - streaming
+      - tool calling
+      - function calling
+      - structured output
+      - vision input
+      - reasoning model
+      - base model
+      - instruct model
+      - FP8
+      - BF16
+  - id: marketplace
+    name: GPU Marketplace
+    description: Decentralized rental of idle GPU capacity (H100, H200, A100, RTX 4090) aggregated from
+      third-party suppliers.
+    terms:
+      - on-demand
+      - reserved cluster
+      - dedicated endpoint
+      - supplier
+      - bare-metal
+      - SSH key
+      - instance
+      - GPU-hour
+      - platform fee
+  - id: account
+    name: Account & Billing
+    description: Account, billing, and API-key management.
+    terms:
+      - API key
+      - deposit
+      - prepaid balance
+      - crypto payment
+      - tier
+      - rate limit
+      - basic
+      - pro
+      - enterprise
+modelFamilies:
+  - meta-llama (Llama 3.1, Llama 3.2 Vision, Llama 3.3)
+  - deepseek-ai (DeepSeek V3, DeepSeek R1)
+  - Qwen (Qwen 2.5, Qwen2-VL, Qwen2.5-Coder)
+  - NousResearch (Hermes 3)
+  - mistralai (Mistral 7B)
+  - stability-ai (SDXL, SD 3.5)
+  - black-forest-labs (FLUX.1 — sunset)
+  - melo-tts (TTS — sunset)
+  - openai-whisper (coming soon)
+hardware:
+  - NVIDIA H200
+  - NVIDIA H100 (SXM and PCIe)
+  - NVIDIA A100
+  - NVIDIA RTX 4090
+deploymentSurfaces:
+  - REST API (OpenAI-compatible) at https://api.hyperbolic.xyz/v1
+  - Python SDK (drop-in for openai)
+  - TypeScript SDK (drop-in for openai)
+  - Hyperbolic CLI (Go, Homebrew)
+  - Hyperbolic MCP server (TypeScript)
+  - Hyperbolic AgentKit (Python)
+  - Hyperbolic Gradio integration
+  - Hyperbolic x402 (Coinbase) chat completions adapter
+  - SkyPilot and SkyPilot Catalog
+  - Hugging Face Inference Providers
+tags:
+  - AI
+  - Artificial Intelligence
+  - Compute
+  - Decentralized
+  - DePIN
+  - GPU
+  - Image Generation
+  - Inference
+  - LLM
+  - Marketplace
+  - Open Source

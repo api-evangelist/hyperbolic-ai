@@ -1,0 +1,71 @@
+extends:
+  - spectral:oas
+rules:
+  hyperbolic-info-contact-email:
+    description: Hyperbolic OpenAPI specs must include a contact email.
+    given: $.info.contact
+    severity: warn
+    then:
+      field: email
+      function: truthy
+  hyperbolic-server-base-url:
+    description: Hyperbolic API servers must use https://api.hyperbolic.xyz/v1 as the base URL.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://api\.hyperbolic\.xyz/v1$'
+  hyperbolic-bearer-security:
+    description: Hyperbolic endpoints must declare Bearer-token security.
+    given: $.components.securitySchemes
+    severity: error
+    then:
+      field: BearerAuth
+      function: truthy
+  hyperbolic-operation-summary-title-case:
+    description: Operation summaries must start with "Hyperbolic" and use Title Case.
+    given: $.paths[*][*].summary
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: '^Hyperbolic [A-Z]'
+  hyperbolic-operation-id-camel-case:
+    description: operationId must be camelCase.
+    given: $.paths[*][*].operationId
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z][a-zA-Z0-9]+$'
+  hyperbolic-error-response-401:
+    description: Every operation should declare a 401 response.
+    given: $.paths[*][*].responses
+    severity: warn
+    then:
+      field: '401'
+      function: truthy
+  hyperbolic-error-response-429:
+    description: Every operation should declare a 429 response since the platform enforces RPM caps.
+    given: $.paths[*][*].responses
+    severity: warn
+    then:
+      field: '429'
+      function: truthy
+  hyperbolic-tag-defined:
+    description: Each operation must declare at least one tag.
+    given: $.paths[*][*]
+    severity: warn
+    then:
+      field: tags
+      function: truthy
+  hyperbolic-license-required:
+    description: info.license must reference the Hyperbolic Terms of Use.
+    given: $.info.license
+    severity: warn
+    then:
+      field: url
+      function: pattern
+      functionOptions:
+        match: 'hyperbolic\.ai/terms'

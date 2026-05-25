@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Hyperbolic Audio Generation API — Audio
+  description: 'Hyperbolic Audio Generation API — Audio. 1 operations. Lead operation: Hyperbolic Generate
+    Audio. Self-contained Naftiko capability covering one Hyperbolic business surface.'
+  tags:
+  - Hyperbolic
+  - Audio Generation
+  - TTS
+  - Inference
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    HYPERBOLIC_API_KEY: HYPERBOLIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: inference-audio-generation
+    baseUri: https://api.hyperbolic.xyz
+    description: Hyperbolic Audio Generation business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-audio-generation
+      path: /v1/audio/generation
+      operations:
+      - name: generateaudio
+        method: POST
+        description: Hyperbolic Generate Audio
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON) — text, speed, language, voice.
+          required: true
+    authentication:
+      type: bearer
+      value: '{{env.HYPERBOLIC_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: inference-audio-generation-rest
+    port: 8080
+    description: REST adapter for Hyperbolic Audio Generation.
+    resources:
+    - path: /v1/audio/generation
+      name: v1-audio-generation
+      description: REST surface for /v1/audio/generation.
+      operations:
+      - method: POST
+        name: generateaudio
+        description: Hyperbolic Generate Audio
+        call: inference-audio-generation.generateaudio
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: inference-audio-generation-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Hyperbolic Audio Generation.
+    tools:
+    - name: hyperbolic-generate-audio
+      description: Hyperbolic Generate Audio
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: inference-audio-generation.generateaudio
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

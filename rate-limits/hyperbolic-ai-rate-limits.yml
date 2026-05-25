@@ -1,0 +1,52 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Hyperbolic
+providerId: hyperbolic-ai
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - AI
+  - Inference
+  - Rate Limiting
+  - Quotas
+description: Reconciled rate limits for the Hyperbolic Serverless Inference API. Tier-based RPM ceilings
+  applied across Chat Completions, Completions, Image Generation, and Audio Generation. No published
+  per-token-per-minute (TPM) limits — Hyperbolic emphasises "zero quota limitations" and falls back to
+  RPM and account balance as the primary backpressure mechanisms.
+sources:
+  - https://docs.hyperbolic.ai/inference/overview
+  - https://docs.hyperbolic.ai/inference/quickstart
+  - https://www.hyperbolic.ai/
+algorithm: request-rate
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+  paymentRequired: 402
+spendLimits:
+  - tier: Basic
+    creditPurchase: $0
+    monthlyCap: account balance
+  - tier: Pro
+    creditPurchase: $5 minimum
+    monthlyCap: account balance
+  - tier: Enterprise
+    creditPurchase: contract
+    monthlyCap: contract
+limits:
+  - tier: Basic
+    surface: All inference endpoints
+    rpm: 60
+    notes: Free tier, community support, no deposit required.
+  - tier: Pro
+    surface: All inference endpoints
+    rpm: 600
+    notes: Requires $5+ deposit. Priority and email support.
+  - tier: Enterprise
+    surface: All inference endpoints
+    rpm: -1
+    notes: Unlimited via custom enterprise contract. 24/7 dedicated support.
+gpuRental:
+  notes: GPU marketplace rentals are capacity-bounded rather than rate-limited. Provisioning is rate-limited
+    implicitly by available marketplace supply at any moment.

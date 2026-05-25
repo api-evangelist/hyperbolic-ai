@@ -1,0 +1,111 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Hyperbolic
+providerId: hyperbolic-ai
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - AI
+  - GPU
+  - Tokens
+description: FOCUS-aligned FinOps definition for Hyperbolic. Combines token-based inference metering with
+  GPU-hour metering for marketplace rentals and dedicated endpoints. Prepaid balance model with crypto
+  (USDC, USDT, DAI) and credit-card top-ups.
+sources:
+  - https://www.hyperbolic.ai/
+  - https://docs.hyperbolic.ai/inference/overview
+  - https://docs.hyperbolic.ai/on-demand/overview
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Hyperbolic
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Prepaid balance
+  billingCurrency: USD
+  paymentMethods:
+    - credit card
+    - USDC
+    - USDT
+    - DAI
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Credit
+    - Adjustment
+  primaryUnit: token
+  secondaryUnits:
+    - gpu_hour
+    - image
+    - character
+    - request
+focusColumns:
+  ServiceName: Hyperbolic Inference & GPU Marketplace
+  ServiceCategory: AI and Machine Learning
+  ProviderName: Hyperbolic
+  PublisherName: Hyperbolic
+  InvoiceIssuerName: Hyperbolic
+  PricingCategory: Usage-Based
+  PricingUnit: MTok
+  BillingCurrency: USD
+meters:
+  - name: inference_tokens
+    unit: token
+    aggregation: sum
+    dimensions:
+      - model
+      - endpoint
+      - api_key
+    description: Tokens consumed by chat completions and base completions endpoints, billed at the
+      per-model rate.
+  - name: image_generation
+    unit: image
+    aggregation: count
+    dimensions:
+      - model_name
+      - api_key
+    description: Number of images returned by the image generation endpoint.
+  - name: audio_tts_characters
+    unit: character
+    aggregation: sum
+    dimensions:
+      - api_key
+    description: Characters of text submitted to the TTS endpoint, billed per 1000 characters.
+  - name: gpu_hours
+    unit: gpu_hour
+    aggregation: sum
+    dimensions:
+      - gpu_model
+      - instance_id
+      - cluster
+      - api_key
+    description: GPU-hours consumed by on-demand, reserved, and dedicated-endpoint rentals.
+  - name: marketplace_supply_revenue
+    unit: usd
+    aggregation: sum
+    dimensions:
+      - supplier_id
+      - gpu_model
+    description: Income paid out to GPU suppliers minus the 10% platform fee retained by Hyperbolic.
+costAllocation:
+  apiKeyTag: workspace API key (issued at app.hyperbolic.ai/settings/api-keys)
+  marketplaceSplit:
+    supplierShare: 0.90
+    platformFee: 0.10
+optimization:
+  - Use OpenAI-compatible streaming to avoid paying for tokens you discard mid-generation.
+  - Prefer Llama 3.3 70B ($0.40/MTok) or smaller 7B/8B models ($0.10/MTok floor) when 405B-class
+    reasoning is not required.
+  - Use Reserved Clusters (3-12 month commitment) for sustained GPU workloads — up to 40% off
+    marketplace on-demand rates.
+  - Use Llama-3.1-405B-FP8 variant for low-latency inference at lower cost than BF16.
+  - Set a $5 deposit to move to the Pro tier (600 RPM) — there is no flat per-month subscription.

@@ -1,0 +1,96 @@
+openapi: 3.1.0
+info:
+  title: Hyperbolic Models API
+  description: >
+    OpenAI-compatible model catalog. Returns the live list of models served
+    by Hyperbolic for inference — chat, base completion, image, vision, and
+    audio.
+  version: v1
+  contact:
+    name: Hyperbolic Support
+    email: support@hyperbolic.ai
+    url: https://docs.hyperbolic.ai
+  license:
+    name: Hyperbolic Terms of Use
+    url: https://www.hyperbolic.ai/terms-of-use
+
+servers:
+  - url: https://api.hyperbolic.xyz/v1
+    description: Hyperbolic Production Inference Server
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Models
+    description: List available inference models
+
+paths:
+  /models:
+    get:
+      summary: Hyperbolic List Models
+      description: List all models currently available for inference.
+      operationId: listModels
+      tags:
+        - Models
+      responses:
+        '200':
+          description: Successful model list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+
+  schemas:
+    ModelList:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+            - list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+
+    Model:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Model identifier used in chat/completion requests.
+        object:
+          type: string
+          enum:
+            - model
+        created:
+          type: integer
+        owned_by:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string

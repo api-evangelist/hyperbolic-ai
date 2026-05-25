@@ -1,0 +1,296 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Hyperbolic
+providerId: hyperbolic-ai
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - AI
+  - GPU
+  - Inference
+  - Marketplace
+description: 'Reconciled plans and per-token / per-image / per-GPU-hour pricing for the Hyperbolic Serverless
+  Inference and GPU Marketplace services. Source: hyperbolic.ai, docs.hyperbolic.ai, and third-party
+  pricing trackers as of May 2026.'
+sources:
+  - https://www.hyperbolic.ai/
+  - https://docs.hyperbolic.ai/inference/overview
+  - https://docs.hyperbolic.ai/on-demand/overview
+  - https://huggingface.co/docs/inference-providers/en/providers/hyperbolic
+plans:
+  - id: hyperbolic-basic
+    name: Basic
+    type: tier
+    description: Free tier — 60 requests per minute, community support, no minimum deposit.
+    entries:
+      - label: Request rate
+        name: rpm
+        type: metered
+        metric: requests
+        limit: 60
+        timeFrame: minute
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: 60 requests/minute
+      - name: Community support
+      - name: No minimum deposit
+  - id: hyperbolic-pro
+    name: Pro
+    type: tier
+    description: Pro tier — 600 requests per minute, priority and email support, requires at least $5 deposit.
+    entries:
+      - label: Request rate
+        name: rpm
+        type: metered
+        metric: requests
+        limit: 600
+        timeFrame: minute
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Minimum deposit
+        name: deposit_minimum
+        type: prepaid
+        metric: usd
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '5.00'
+        userMultiplied: false
+    elements:
+      - name: 600 requests/minute
+      - name: Priority + email support
+      - name: $5 minimum deposit
+  - id: hyperbolic-enterprise
+    name: Enterprise
+    type: tier
+    description: Enterprise tier — unlimited rate limits, 24/7 dedicated support, custom contracts.
+    entries:
+      - label: Request rate
+        name: rpm
+        type: metered
+        metric: requests
+        limit: -1
+        timeFrame: minute
+        geo: global
+        unit: 1
+        price: 'Call'
+        userMultiplied: false
+    elements:
+      - name: Unlimited rate limits
+      - name: 24/7 dedicated support
+      - name: Custom contracts and SLA
+  - id: hyperbolic-inference-llama-405b
+    name: Llama 3.1 405B Inference
+    type: usage-based
+    description: Per-million-token pricing for Meta-Llama-3.1-405B-Instruct.
+    entries:
+      - label: Tokens (input + output)
+        name: tokens
+        type: metered
+        metric: tokens
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: '4.00'
+        userMultiplied: false
+  - id: hyperbolic-inference-deepseek-r1
+    name: DeepSeek R1 Inference
+    type: usage-based
+    description: Per-million-token pricing for DeepSeek-R1.
+    entries:
+      - label: Tokens (input + output)
+        name: tokens
+        type: metered
+        metric: tokens
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: '3.00'
+        userMultiplied: false
+  - id: hyperbolic-inference-llama-70b
+    name: Llama 3.3 70B Inference
+    type: usage-based
+    description: Per-million-token pricing for Llama-3.3-70B and similar 70B-class models.
+    entries:
+      - label: Tokens (input + output)
+        name: tokens
+        type: metered
+        metric: tokens
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: '0.40'
+        userMultiplied: false
+  - id: hyperbolic-inference-small-llms
+    name: Small LLMs Inference
+    type: usage-based
+    description: Per-million-token pricing floor for 7B–8B class models.
+    entries:
+      - label: Tokens (input + output)
+        name: tokens
+        type: metered
+        metric: tokens
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: '0.10'
+        userMultiplied: false
+  - id: hyperbolic-inference-vision
+    name: Vision Models Inference
+    type: usage-based
+    description: Per-million-token pricing floor for multimodal vision models (Llama 3.2 Vision, Qwen2-VL).
+    entries:
+      - label: Tokens (input + output)
+        name: tokens
+        type: metered
+        metric: tokens
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: '0.15'
+        userMultiplied: false
+  - id: hyperbolic-image-generation
+    name: Image Generation
+    type: usage-based
+    description: Per-image pricing floor for SDXL / SD3.5 / FLUX diffusion models.
+    entries:
+      - label: Images generated
+        name: images
+        type: metered
+        metric: image
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.0025'
+        userMultiplied: false
+  - id: hyperbolic-audio-tts
+    name: Audio TTS
+    type: usage-based
+    description: Per-1000-character pricing floor for text-to-speech.
+    entries:
+      - label: Characters synthesized
+        name: characters
+        type: metered
+        metric: character
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000
+        price: '0.001'
+        userMultiplied: false
+  - id: hyperbolic-gpu-rtx4090
+    name: GPU On-Demand — RTX 4090
+    type: usage-based
+    description: Per-GPU-hour pricing for RTX 4090 on-demand rental.
+    entries:
+      - label: GPU hours
+        name: gpu_hours
+        type: metered
+        metric: gpu_hour
+        limit: -1
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: '0.50'
+        userMultiplied: false
+  - id: hyperbolic-gpu-a100
+    name: GPU On-Demand — A100
+    type: usage-based
+    description: Per-GPU-hour pricing for NVIDIA A100.
+    entries:
+      - label: GPU hours
+        name: gpu_hours
+        type: metered
+        metric: gpu_hour
+        limit: -1
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: '1.80'
+        userMultiplied: false
+  - id: hyperbolic-gpu-h100
+    name: GPU On-Demand — H100
+    type: usage-based
+    description: Per-GPU-hour pricing for NVIDIA H100. Marketplace pricing ranges from $1.39 to $3.20 per
+      hour depending on supplier, configuration, and dedicated vs shared.
+    entries:
+      - label: GPU hours (entry marketplace)
+        name: gpu_hours_marketplace
+        type: metered
+        metric: gpu_hour
+        limit: -1
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: '1.39'
+        userMultiplied: false
+      - label: GPU hours (dedicated)
+        name: gpu_hours_dedicated
+        type: metered
+        metric: gpu_hour
+        limit: -1
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: '3.20'
+        userMultiplied: false
+  - id: hyperbolic-gpu-h200
+    name: GPU On-Demand — H200
+    type: usage-based
+    description: Per-GPU-hour pricing for NVIDIA H200 on-demand rental.
+    entries:
+      - label: GPU hours
+        name: gpu_hours
+        type: metered
+        metric: gpu_hour
+        limit: -1
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: 'Marketplace'
+        userMultiplied: false
+  - id: hyperbolic-reserved-clusters
+    name: Reserved Clusters
+    type: commitment
+    description: 3-12 month prepaid GPU cluster commitments with volume discounts up to 40% off marketplace
+      on-demand pricing.
+    entries:
+      - label: Volume discount
+        name: discount
+        type: discount
+        metric: percent
+        limit: 40
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '-40'
+        userMultiplied: false
+  - id: hyperbolic-marketplace-fee
+    name: Marketplace Platform Fee
+    type: commission
+    description: Hyperbolic charges a 10% platform fee on rental income from GPU suppliers.
+    entries:
+      - label: Platform fee
+        name: platform_fee
+        type: commission
+        metric: percent
+        limit: 10
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '10'
+        userMultiplied: false

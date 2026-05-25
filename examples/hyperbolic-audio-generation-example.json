@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.hyperbolic.xyz/v1/audio/generation",
+    "headers": {
+      "Authorization": "Bearer YOUR_HYPERBOLIC_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "text": "Hello and welcome to Hyperbolic.",
+      "speed": 1.0,
+      "language": "EN"
+    }
+  },
+  "response": {
+    "audio": "UklGRiQAAABXQVZFZm10IBAAAAA... (base64-truncated)",
+    "duration": 1.85
+  }
+}

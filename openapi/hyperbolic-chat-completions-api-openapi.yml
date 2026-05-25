@@ -1,0 +1,426 @@
+openapi: 3.1.0
+info:
+  title: Hyperbolic Chat Completions API
+  description: >
+    OpenAI-compatible chat completions endpoint for the Hyperbolic Serverless
+    Inference service. Serves 25+ open-source LLMs including Llama 3.1
+    8B/70B/405B, Qwen 2.5, DeepSeek V3, DeepSeek R1, Hermes 3, Mistral, and
+    multimodal vision models (Llama 3.2 Vision, Qwen2-VL). Supports streaming,
+    function/tool calling, structured JSON output, and chain-of-thought
+    reasoning models. Drop-in OpenAI SDK replacement — change `api_key` and
+    `base_url` only.
+  version: v1
+  contact:
+    name: Hyperbolic Support
+    email: support@hyperbolic.ai
+    url: https://docs.hyperbolic.ai
+  license:
+    name: Hyperbolic Terms of Use
+    url: https://www.hyperbolic.ai/terms-of-use
+
+servers:
+  - url: https://api.hyperbolic.xyz/v1
+    description: Hyperbolic Production Inference Server
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Chat Completions
+    description: Generate chat-style completions from open-source LLMs
+
+paths:
+  /chat/completions:
+    post:
+      summary: Hyperbolic Create A Chat Completion
+      description: >
+        Create a chat completion using one of the open-source LLMs served by
+        Hyperbolic. The request and response shape is fully OpenAI-compatible:
+        send a list of messages with role (`system`, `user`, `assistant`,
+        `tool`) and content (text or, for vision models, image_url blocks).
+        Streaming is enabled by setting `stream: true`. Tool calling, structured
+        outputs (`response_format`), and reasoning models (DeepSeek R1) are
+        supported.
+      operationId: createChatCompletion
+      tags:
+        - Chat Completions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+            examples:
+              SimpleChat:
+                summary: Simple chat with DeepSeek V3
+                value:
+                  model: deepseek-ai/DeepSeek-V3
+                  messages:
+                    - role: user
+                      content: What is the capital of France?
+                  max_tokens: 256
+                  temperature: 0.7
+              Llama405B:
+                summary: Llama 3.1 405B reasoning
+                value:
+                  model: meta-llama/Meta-Llama-3.1-405B-Instruct
+                  messages:
+                    - role: system
+                      content: You are a careful research assistant.
+                    - role: user
+                      content: Summarize the difference between BF16 and FP8 inference.
+                  max_tokens: 512
+                  temperature: 0.5
+                  stream: false
+              ToolUse:
+                summary: Function calling
+                value:
+                  model: meta-llama/Meta-Llama-3.1-70B-Instruct
+                  messages:
+                    - role: user
+                      content: What is the weather in Reston, VA?
+                  tools:
+                    - type: function
+                      function:
+                        name: get_weather
+                        description: Get current weather for a location
+                        parameters:
+                          type: object
+                          properties:
+                            location:
+                              type: string
+                              description: City and state
+                          required:
+                            - location
+                  tool_choice: auto
+      responses:
+        '200':
+          description: Successful chat completion response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionResponse'
+              examples:
+                SimpleResponse:
+                  summary: Simple chat completion
+                  value:
+                    id: chatcmpl-abc123
+                    object: chat.completion
+                    created: 1748133600
+                    model: deepseek-ai/DeepSeek-V3
+                    choices:
+                      - index: 0
+                        message:
+                          role: assistant
+                          content: The capital of France is Paris.
+                        finish_reason: stop
+                    usage:
+                      prompt_tokens: 12
+                      completion_tokens: 7
+                      total_tokens: 19
+            text/event-stream:
+              schema:
+                type: string
+                description: >
+                  Server-sent events stream when `stream: true`. Each event is a
+                  JSON-encoded ChatCompletionChunk with a `choices[].delta`
+                  payload, terminated by `data: [DONE]`.
+        '400':
+          description: Bad Request — invalid model, parameters, or message structure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized — missing or invalid Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required — account balance exhausted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests — rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: >
+        Hyperbolic API key issued at https://app.hyperbolic.ai/settings/api-keys.
+        Pass as `Authorization: Bearer <YOUR_API_KEY>`.
+
+  schemas:
+    ChatCompletionRequest:
+      type: object
+      required:
+        - model
+        - messages
+      properties:
+        model:
+          type: string
+          description: >
+            Hyperbolic model identifier — see GET /v1/models for the live
+            catalog. Examples: `meta-llama/Meta-Llama-3.1-405B-Instruct`,
+            `meta-llama/Meta-Llama-3.1-70B-Instruct`, `deepseek-ai/DeepSeek-V3`,
+            `deepseek-ai/DeepSeek-R1`, `Qwen/Qwen2.5-72B-Instruct`,
+            `NousResearch/Hermes-3-Llama-3.1-70B`, `mistralai/Mistral-7B-Instruct`,
+            `meta-llama/Llama-3.2-90B-Vision-Instruct`.
+        messages:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+        max_tokens:
+          type: integer
+          minimum: 1
+          description: Maximum number of tokens to generate. Defaults vary by model.
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 1
+        top_k:
+          type: integer
+          minimum: 0
+        n:
+          type: integer
+          minimum: 1
+          default: 1
+          description: Number of completions to generate.
+        stream:
+          type: boolean
+          default: false
+          description: Stream partial deltas as Server-Sent Events.
+        stop:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+          description: Stop sequence(s) — up to 4.
+        presence_penalty:
+          type: number
+          minimum: -2
+          maximum: 2
+        frequency_penalty:
+          type: number
+          minimum: -2
+          maximum: 2
+        seed:
+          type: integer
+          description: Best-effort deterministic seed.
+        response_format:
+          type: object
+          description: Structured-output specification (e.g. `{ "type": "json_object" }`).
+          properties:
+            type:
+              type: string
+              enum:
+                - text
+                - json_object
+                - json_schema
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+          description: Function/tool catalog for OpenAI-compatible tool calling.
+        tool_choice:
+          oneOf:
+            - type: string
+              enum:
+                - none
+                - auto
+                - required
+            - type: object
+        user:
+          type: string
+          description: End-user identifier for abuse monitoring.
+
+    ChatMessage:
+      type: object
+      required:
+        - role
+        - content
+      properties:
+        role:
+          type: string
+          enum:
+            - system
+            - user
+            - assistant
+            - tool
+        content:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                $ref: '#/components/schemas/ContentPart'
+        name:
+          type: string
+        tool_call_id:
+          type: string
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolCall'
+
+    ContentPart:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - text
+            - image_url
+        text:
+          type: string
+        image_url:
+          type: object
+          properties:
+            url:
+              type: string
+              description: Public URL or `data:` URI for image input on vision models.
+            detail:
+              type: string
+              enum:
+                - auto
+                - low
+                - high
+
+    Tool:
+      type: object
+      required:
+        - type
+        - function
+      properties:
+        type:
+          type: string
+          enum:
+            - function
+        function:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            parameters:
+              type: object
+              description: JSON Schema describing the function arguments.
+
+    ToolCall:
+      type: object
+      required:
+        - id
+        - type
+        - function
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - function
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+            arguments:
+              type: string
+              description: JSON-encoded argument string.
+
+    ChatCompletionResponse:
+      type: object
+      required:
+        - id
+        - object
+        - created
+        - model
+        - choices
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          enum:
+            - chat.completion
+        created:
+          type: integer
+          description: Unix epoch seconds.
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+        usage:
+          $ref: '#/components/schemas/Usage'
+        system_fingerprint:
+          type: string
+
+    ChatCompletionChoice:
+      type: object
+      properties:
+        index:
+          type: integer
+        message:
+          $ref: '#/components/schemas/ChatMessage'
+        finish_reason:
+          type: string
+          enum:
+            - stop
+            - length
+            - tool_calls
+            - content_filter
+
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
+            param:
+              type: string
