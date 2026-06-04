@@ -1,0 +1,111 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Chat To Image
+  summary: Use an LLM to craft a vivid image prompt, then render it with a diffusion model.
+  description: >-
+    A creative two-stage pipeline that chains Hyperbolic's chat completions and
+    image generation endpoints. A language model expands a short idea into a
+    detailed, diffusion-ready prompt, and that prompt is fed directly into a
+    Stable Diffusion or FLUX model to render base64 images. Every step inlines
+    its request — including the inline Authorization Bearer credential — so the
+    flow reads and runs without opening the underlying OpenAPI descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  type: openapi
+- name: imageGenerationApi
+  url: ../openapi/hyperbolic-image-generation-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: chat-to-image
+  summary: Expand an idea into an image prompt with an LLM and render it to an image.
+  description: >-
+    Sends a brief creative idea to a chat model with instructions to return a
+    rich, single-paragraph image prompt, then passes the returned text to the
+    image generation endpoint to produce base64-encoded images.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - idea
+    - chatModel
+    - imageModel
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      idea:
+        type: string
+        description: A short creative idea to expand into a detailed image prompt.
+      chatModel:
+        type: string
+        description: Chat model id used to author the image prompt.
+      imageModel:
+        type: string
+        description: Image model name (e.g. SDXL1.0-base or SD3.5).
+      steps:
+        type: integer
+        description: Number of diffusion steps.
+      width:
+        type: integer
+        description: Output image width in pixels.
+      height:
+        type: integer
+        description: Output image height in pixels.
+  steps:
+  - stepId: authorPrompt
+    description: >-
+      Ask the chat model to turn the short idea into a detailed, single
+      paragraph text-to-image prompt suitable for a diffusion model.
+    operationId: createChatCompletion
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.chatModel
+        messages:
+        - role: system
+          content: >-
+            You write vivid, single-paragraph text-to-image prompts. Reply with
+            only the prompt and no preamble.
+        - role: user
+          content: $inputs.idea
+        max_tokens: 300
+        temperature: 0.8
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      imagePrompt: $response.body#/choices/0/message/content
+  - stepId: render
+    description: >-
+      Generate images from the authored prompt and capture the base64 image and
+      the seed used.
+    operationId: generateImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model_name: $inputs.imageModel
+        prompt: $steps.authorPrompt.outputs.imagePrompt
+        steps: $inputs.steps
+        width: $inputs.width
+        height: $inputs.height
+        n: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      image: $response.body#/images/0/image
+      seed: $response.body#/images/0/seed
+      inferenceTime: $response.body#/inference_time
+  outputs:
+    imagePrompt: $steps.authorPrompt.outputs.imagePrompt
+    image: $steps.render.outputs.image
+    seed: $steps.render.outputs.seed

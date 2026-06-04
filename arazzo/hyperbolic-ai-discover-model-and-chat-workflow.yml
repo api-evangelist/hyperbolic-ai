@@ -1,0 +1,101 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Discover Model And Chat
+  summary: List the live model catalog, pick a chat model, and run a chat completion against it.
+  description: >-
+    A foundational Hyperbolic Serverless Inference flow. The workflow first
+    pulls the live model catalog so a caller can confirm a chat model is
+    available, then sends a chat completion request to that model. Every step
+    inlines its request — including the inline Authorization Bearer credential —
+    so the flow can be read and executed without opening the underlying OpenAPI
+    descriptions.
+  version: 1.0.0
+sourceDescriptions:
+- name: modelsApi
+  url: ../openapi/hyperbolic-models-api-openapi.yml
+  type: openapi
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: discover-model-and-chat
+  summary: Resolve an available chat model from the catalog and generate a chat completion.
+  description: >-
+    Calls the OpenAI-compatible models endpoint to confirm the live catalog,
+    then submits a chat completion using a model id the caller supplies. The
+    catalog read lets the caller validate the model exists before spending
+    inference credits.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - model
+    - prompt
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      model:
+        type: string
+        description: >-
+          Chat model identifier (e.g. deepseek-ai/DeepSeek-V3 or
+          meta-llama/Meta-Llama-3.1-70B-Instruct).
+      systemPrompt:
+        type: string
+        description: Optional system instruction for the assistant.
+      prompt:
+        type: string
+        description: The user message to send to the chat model.
+      maxTokens:
+        type: integer
+        description: Maximum number of tokens to generate.
+      temperature:
+        type: number
+        description: Sampling temperature between 0 and 2.
+  steps:
+  - stepId: listCatalog
+    description: >-
+      List all models currently available for inference so the target chat
+      model can be confirmed before a completion is requested.
+    operationId: listModels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      models: $response.body#/data
+      firstModelId: $response.body#/data/0/id
+  - stepId: chat
+    description: >-
+      Send a single-turn chat completion to the supplied model and capture the
+      assistant message text and token usage.
+    operationId: createChatCompletion
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.model
+        messages:
+        - role: system
+          content: $inputs.systemPrompt
+        - role: user
+          content: $inputs.prompt
+        max_tokens: $inputs.maxTokens
+        temperature: $inputs.temperature
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      completionId: $response.body#/id
+      answer: $response.body#/choices/0/message/content
+      finishReason: $response.body#/choices/0/finish_reason
+      totalTokens: $response.body#/usage/total_tokens
+  outputs:
+    models: $steps.listCatalog.outputs.models
+    answer: $steps.chat.outputs.answer
+    totalTokens: $steps.chat.outputs.totalTokens

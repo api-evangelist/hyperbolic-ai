@@ -1,0 +1,133 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Image Prompt QA Loop
+  summary: Render an image, judge it with a vision model, and re-render once if it fails QA.
+  description: >-
+    A quality-controlled image pipeline that branches on a vision model's
+    verdict. A diffusion model renders an image, a vision-capable chat model
+    inspects the base64 result against the requested subject and returns a PASS
+    or FAIL verdict, and on failure the workflow re-renders once with a higher
+    step count. Every step inlines its request and inline Authorization Bearer
+    credential so the flow reads and runs without opening the OpenAPI sources.
+  version: 1.0.0
+sourceDescriptions:
+- name: imageGenerationApi
+  url: ../openapi/hyperbolic-image-generation-api-openapi.yml
+  type: openapi
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: image-prompt-qa
+  summary: Generate an image, QA it with a vision model, and re-render on failure.
+  description: >-
+    Renders an image from a prompt, asks a vision model whether it matches the
+    requested subject, and branches: a PASS ends the flow while a FAIL triggers
+    a single higher-quality re-render.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - imageModel
+    - prompt
+    - visionModel
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      imageModel:
+        type: string
+        description: Image model name (e.g. SDXL1.0-base).
+      prompt:
+        type: string
+        description: The text-to-image prompt describing the desired subject.
+      visionModel:
+        type: string
+        description: Vision-capable chat model id used to judge the image.
+  steps:
+  - stepId: render
+    description: >-
+      Generate a first-pass image from the prompt and capture its base64 bytes.
+    operationId: generateImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model_name: $inputs.imageModel
+        prompt: $inputs.prompt
+        steps: 25
+        n: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      image: $response.body#/images/0/image
+  - stepId: judge
+    description: >-
+      Ask the vision model whether the rendered image matches the requested
+      subject, requiring a verdict that starts with PASS or FAIL.
+    operationId: createChatCompletion
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.visionModel
+        messages:
+        - role: user
+          content:
+          - type: text
+            text: "Does this image match the request: $inputs.prompt? Reply with PASS or FAIL then a short reason."
+          - type: image_url
+            image_url:
+              url: "data:image/png;base64,$steps.render.outputs.image"
+        max_tokens: 120
+        temperature: 0
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      verdict: $response.body#/choices/0/message/content
+    onSuccess:
+    - name: passed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.choices[0].message.content =~ '^PASS'
+        type: jsonpath
+    - name: failed
+      type: goto
+      stepId: rerender
+      criteria:
+      - context: $response.body
+        condition: $.choices[0].message.content =~ '^FAIL'
+        type: jsonpath
+  - stepId: rerender
+    description: >-
+      Re-render the image once at a higher step count when the vision model
+      rejected the first pass.
+    operationId: generateImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model_name: $inputs.imageModel
+        prompt: $inputs.prompt
+        steps: 50
+        n: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      image: $response.body#/images/0/image
+      seed: $response.body#/images/0/seed
+  outputs:
+    firstImage: $steps.render.outputs.image
+    verdict: $steps.judge.outputs.verdict
+    finalImage: $steps.rerender.outputs.image

@@ -1,0 +1,89 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Discover Model And Complete
+  summary: List the catalog and run a base-model text completion against a non-instruct model.
+  description: >-
+    Targets Hyperbolic's legacy text completions endpoint, which serves base
+    (non-instruct) models such as the Llama-3.1-405B base BF16 and FP8 variants
+    unique to Hyperbolic. The workflow lists the live catalog to confirm the
+    base model, then submits a prompt completion. Each step inlines its request
+    and inline Authorization Bearer credential.
+  version: 1.0.0
+sourceDescriptions:
+- name: modelsApi
+  url: ../openapi/hyperbolic-models-api-openapi.yml
+  type: openapi
+- name: completionsApi
+  url: ../openapi/hyperbolic-completions-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: discover-model-and-complete
+  summary: Confirm a base model from the catalog and generate a raw text completion.
+  description: >-
+    Reads the model catalog, then sends a prompt to the legacy completions
+    endpoint for a base model. Useful for high-throughput base-model prompting
+    where instruct chat formatting is not wanted.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - model
+    - prompt
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      model:
+        type: string
+        description: Base model id (e.g. meta-llama/Meta-Llama-3.1-405B).
+      prompt:
+        type: string
+        description: The raw text prompt to complete.
+      maxTokens:
+        type: integer
+        description: Maximum number of tokens to generate.
+      temperature:
+        type: number
+        description: Sampling temperature between 0 and 2.
+  steps:
+  - stepId: listCatalog
+    description: >-
+      List the live inference catalog so the base model can be confirmed before
+      a completion is requested.
+    operationId: listModels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      models: $response.body#/data
+  - stepId: complete
+    description: >-
+      Submit the prompt to the base model and capture the generated text and
+      token usage.
+    operationId: createCompletion
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.model
+        prompt: $inputs.prompt
+        max_tokens: $inputs.maxTokens
+        temperature: $inputs.temperature
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      completionId: $response.body#/id
+      text: $response.body#/choices/0/text
+      finishReason: $response.body#/choices/0/finish_reason
+      totalTokens: $response.body#/usage/total_tokens
+  outputs:
+    models: $steps.listCatalog.outputs.models
+    text: $steps.complete.outputs.text
+    totalTokens: $steps.complete.outputs.totalTokens

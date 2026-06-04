@@ -140,6 +140,36 @@ kind: contract
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/hyperbolic-ai-chat-to-image-workflow.yml
+    name: Hyperbolic Chat To Image
+    summary: Use an LLM to craft a vivid image prompt, then render it with a diffusion model.
+  - url: arazzo/hyperbolic-ai-chat-to-speech-workflow.yml
+    name: Hyperbolic Chat To Speech
+    summary: Generate an assistant reply with an LLM, then narrate it with text-to-speech.
+  - url: arazzo/hyperbolic-ai-discover-model-and-chat-workflow.yml
+    name: Hyperbolic Discover Model And Chat
+    summary: List the live model catalog, pick a chat model, and run a chat completion against it.
+  - url: arazzo/hyperbolic-ai-discover-model-and-complete-workflow.yml
+    name: Hyperbolic Discover Model And Complete
+    summary: List the catalog and run a base-model text completion against a non-instruct model.
+  - url: arazzo/hyperbolic-ai-generate-and-describe-image-workflow.yml
+    name: Hyperbolic Generate And Describe Image
+    summary: Render an image with diffusion, then describe it with a vision LLM and narrate the caption.
+  - url: arazzo/hyperbolic-ai-image-prompt-qa-workflow.yml
+    name: Hyperbolic Image Prompt QA Loop
+    summary: Render an image, judge it with a vision model, and re-render once if it fails QA.
+  - url: arazzo/hyperbolic-ai-multimodal-story-workflow.yml
+    name: Hyperbolic Multimodal Story
+    summary: List models, write a short story, illustrate it, and narrate it across four endpoints.
+  - url: arazzo/hyperbolic-ai-research-summarize-narrate-workflow.yml
+    name: Hyperbolic Research Summarize And Narrate
+    summary: Confirm a reasoning model, summarize a topic with it, and narrate the summary.
+  - url: arazzo/hyperbolic-ai-tool-calling-roundtrip-workflow.yml
+    name: Hyperbolic Tool Calling Roundtrip
+    summary: Run an OpenAI-compatible tool call and feed the tool result back for a final answer.
 - type: Portal
   url: https://www.hyperbolic.ai/
 - type: Documentation

@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Chat To Speech
+  summary: Generate an assistant reply with an LLM, then narrate it with text-to-speech.
+  description: >-
+    Chains Hyperbolic's chat completions and audio generation (text-to-speech)
+    endpoints into a voice assistant pipeline. A language model produces a
+    concise spoken-style answer, and that answer is converted to base64 speech
+    audio. Each step inlines its request and inline Authorization Bearer
+    credential so the flow reads and runs without opening the OpenAPI sources.
+  version: 1.0.0
+sourceDescriptions:
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  type: openapi
+- name: audioGenerationApi
+  url: ../openapi/hyperbolic-audio-generation-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: chat-to-speech
+  summary: Produce a chat answer and narrate it as base64 speech audio.
+  description: >-
+    Sends a question to a chat model asking for a concise, speech-friendly
+    answer, then passes the answer text to the text-to-speech endpoint to
+    produce narrated audio.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - chatModel
+    - question
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      chatModel:
+        type: string
+        description: Chat model id used to author the spoken answer.
+      question:
+        type: string
+        description: The question to answer and narrate.
+      language:
+        type: string
+        description: TTS language code (e.g. EN, ES, FR, JA, ZH, KR).
+      speed:
+        type: number
+        description: Speech speed between 0.5 and 2.0.
+      voice:
+        type: string
+        description: Optional speaker / voice id for the TTS model.
+  steps:
+  - stepId: answer
+    description: >-
+      Ask the chat model for a concise, natural spoken-style answer suitable for
+      narration.
+    operationId: createChatCompletion
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.chatModel
+        messages:
+        - role: system
+          content: >-
+            You answer in a concise, natural spoken style of two or three
+            sentences with no markdown or lists.
+        - role: user
+          content: $inputs.question
+        max_tokens: 300
+        temperature: 0.6
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      answer: $response.body#/choices/0/message/content
+  - stepId: narrate
+    description: >-
+      Convert the chat answer to speech audio and capture the base64 audio and
+      its duration.
+    operationId: generateAudio
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        text: $steps.answer.outputs.answer
+        language: $inputs.language
+        speed: $inputs.speed
+        voice: $inputs.voice
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      audio: $response.body#/audio
+      duration: $response.body#/duration
+  outputs:
+    answer: $steps.answer.outputs.answer
+    audio: $steps.narrate.outputs.audio
+    duration: $steps.narrate.outputs.duration

@@ -233,7 +233,7 @@ components:
           description: Best-effort deterministic seed.
         response_format:
           type: object
-          description: Structured-output specification (e.g. `{ "type": "json_object" }`).
+          description: 'Structured-output specification (e.g. { "type": "json_object" }).'
           properties:
             type:
               type: string

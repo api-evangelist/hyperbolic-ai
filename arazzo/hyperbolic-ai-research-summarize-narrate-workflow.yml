@@ -1,0 +1,116 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Research Summarize And Narrate
+  summary: Confirm a reasoning model, summarize a topic with it, and narrate the summary.
+  description: >-
+    A three-stage briefing pipeline. The workflow lists the live model catalog
+    to confirm a reasoning or instruct model is available, asks that model for a
+    short spoken-style summary of a topic, then converts the summary into speech
+    audio with the text-to-speech endpoint. Each step inlines its request and
+    inline Authorization Bearer credential so the flow reads and runs without
+    opening the OpenAPI sources.
+  version: 1.0.0
+sourceDescriptions:
+- name: modelsApi
+  url: ../openapi/hyperbolic-models-api-openapi.yml
+  type: openapi
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  type: openapi
+- name: audioGenerationApi
+  url: ../openapi/hyperbolic-audio-generation-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: research-summarize-narrate
+  summary: List models, summarize a topic with a chat model, and narrate the summary.
+  description: >-
+    Confirms the catalog, generates a concise spoken-style summary of a topic
+    with the chosen model, and renders that summary as base64 speech audio.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - model
+    - topic
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      model:
+        type: string
+        description: Chat / reasoning model id used to summarize the topic.
+      topic:
+        type: string
+        description: The subject to summarize.
+      language:
+        type: string
+        description: TTS language code for narration.
+      speed:
+        type: number
+        description: Speech speed between 0.5 and 2.0.
+  steps:
+  - stepId: listCatalog
+    description: >-
+      List the live inference catalog so the summarization model can be
+      confirmed before any inference credits are spent.
+    operationId: listModels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      models: $response.body#/data
+  - stepId: summarize
+    description: >-
+      Ask the model for a concise, spoken-style summary of the topic in a few
+      sentences.
+    operationId: createChatCompletion
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.model
+        messages:
+        - role: system
+          content: >-
+            You summarize topics in three or four clear spoken-style sentences
+            with no markdown or lists.
+        - role: user
+          content: $inputs.topic
+        max_tokens: 400
+        temperature: 0.4
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      summary: $response.body#/choices/0/message/content
+      totalTokens: $response.body#/usage/total_tokens
+  - stepId: narrate
+    description: >-
+      Convert the summary to speech audio and capture the base64 audio and its
+      duration.
+    operationId: generateAudio
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        text: $steps.summarize.outputs.summary
+        language: $inputs.language
+        speed: $inputs.speed
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      audio: $response.body#/audio
+      duration: $response.body#/duration
+  outputs:
+    summary: $steps.summarize.outputs.summary
+    audio: $steps.narrate.outputs.audio
+    duration: $steps.narrate.outputs.duration

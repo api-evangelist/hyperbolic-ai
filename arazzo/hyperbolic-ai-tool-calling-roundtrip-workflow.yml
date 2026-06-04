@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Tool Calling Roundtrip
+  summary: Run an OpenAI-compatible tool call and feed the tool result back for a final answer.
+  description: >-
+    Exercises Hyperbolic's OpenAI-compatible function/tool calling over two
+    chat completion turns within the same endpoint. The first turn offers a tool
+    catalog and lets the model request a function call; the second turn submits
+    the caller-supplied tool result back to the model to produce the final
+    natural-language answer. Both steps reuse the createChatCompletion operation,
+    so they are referenced by operationPath. Every step inlines its request and
+    inline Authorization Bearer credential so the flow reads and runs without
+    opening the OpenAPI sources.
+  version: 1.0.0
+sourceDescriptions:
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: tool-calling-roundtrip
+  summary: Request a tool call, then return the tool result for a final answer.
+  description: >-
+    First chat turn presents a single function tool and lets the model decide to
+    call it; the second turn supplies the tool output back as a tool message so
+    the model can finish the answer.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - model
+    - question
+    - toolName
+    - toolDescription
+    - toolResult
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      model:
+        type: string
+        description: Chat model id that supports tool calling.
+      question:
+        type: string
+        description: The user question that may require the tool.
+      toolName:
+        type: string
+        description: Name of the single function tool offered to the model.
+      toolDescription:
+        type: string
+        description: Human description of what the tool does.
+      toolResult:
+        type: string
+        description: The caller-computed result string returned to the model.
+  steps:
+  - stepId: requestToolCall
+    description: >-
+      Send the question with a single function tool available and let the model
+      decide whether to call it, capturing any returned tool call.
+    operationPath: '{$sourceDescriptions.chatCompletionsApi.url}#/paths/~1chat~1completions/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.model
+        messages:
+        - role: user
+          content: $inputs.question
+        tools:
+        - type: function
+          function:
+            name: $inputs.toolName
+            description: $inputs.toolDescription
+        tool_choice: auto
+        max_tokens: 256
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      finishReason: $response.body#/choices/0/finish_reason
+      toolCallId: $response.body#/choices/0/message/tool_calls/0/id
+      toolArguments: $response.body#/choices/0/message/tool_calls/0/function/arguments
+  - stepId: submitToolResult
+    description: >-
+      Return the tool result back to the model as a tool message so it can
+      produce the final natural-language answer.
+    operationPath: '{$sourceDescriptions.chatCompletionsApi.url}#/paths/~1chat~1completions/post'
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.model
+        messages:
+        - role: user
+          content: $inputs.question
+        - role: tool
+          tool_call_id: $steps.requestToolCall.outputs.toolCallId
+          name: $inputs.toolName
+          content: $inputs.toolResult
+        max_tokens: 400
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      answer: $response.body#/choices/0/message/content
+  outputs:
+    toolArguments: $steps.requestToolCall.outputs.toolArguments
+    answer: $steps.submitToolResult.outputs.answer

@@ -1,0 +1,140 @@
+arazzo: 1.0.1
+info:
+  title: Hyperbolic Multimodal Story
+  summary: List models, write a short story, illustrate it, and narrate it across four endpoints.
+  description: >-
+    A complete multimodal storytelling pipeline that chains all four Hyperbolic
+    inference modalities. The workflow confirms the catalog, writes a short
+    story with a chat model, renders a cover illustration from the story with a
+    diffusion model, and narrates the story with the text-to-speech endpoint.
+    Every step inlines its request and inline Authorization Bearer credential so
+    the flow reads and runs without opening the OpenAPI sources.
+  version: 1.0.0
+sourceDescriptions:
+- name: modelsApi
+  url: ../openapi/hyperbolic-models-api-openapi.yml
+  type: openapi
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  type: openapi
+- name: imageGenerationApi
+  url: ../openapi/hyperbolic-image-generation-api-openapi.yml
+  type: openapi
+- name: audioGenerationApi
+  url: ../openapi/hyperbolic-audio-generation-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: multimodal-story
+  summary: Generate a story, illustrate it, and narrate it in one pass.
+  description: >-
+    Confirms the catalog, writes a short story from a theme, renders a cover
+    image from the story, and produces narrated speech audio of the story.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - chatModel
+    - imageModel
+    - theme
+    properties:
+      apiKey:
+        type: string
+        description: Hyperbolic API key passed as a Bearer token.
+      chatModel:
+        type: string
+        description: Chat model id used to write the story.
+      imageModel:
+        type: string
+        description: Image model name used to render the cover (e.g. SDXL1.0-base).
+      theme:
+        type: string
+        description: The theme or premise for the short story.
+      language:
+        type: string
+        description: TTS language code for narration.
+      speed:
+        type: number
+        description: Speech speed between 0.5 and 2.0.
+  steps:
+  - stepId: listCatalog
+    description: >-
+      List the live inference catalog so the chat and image models can be
+      confirmed before generation begins.
+    operationId: listModels
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      models: $response.body#/data
+  - stepId: writeStory
+    description: >-
+      Ask the chat model to write a short, self-contained story based on the
+      theme.
+    operationId: createChatCompletion
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model: $inputs.chatModel
+        messages:
+        - role: system
+          content: >-
+            You write a short, self-contained story of about six sentences in
+            plain prose with no markdown.
+        - role: user
+          content: $inputs.theme
+        max_tokens: 600
+        temperature: 0.9
+        stream: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      story: $response.body#/choices/0/message/content
+  - stepId: illustrate
+    description: >-
+      Render a cover illustration using the story text as the diffusion prompt.
+    operationId: generateImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        model_name: $inputs.imageModel
+        prompt: $steps.writeStory.outputs.story
+        n: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      coverImage: $response.body#/images/0/image
+  - stepId: narrate
+    description: >-
+      Convert the story to speech audio and capture the base64 audio and its
+      duration.
+    operationId: generateAudio
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.apiKey"
+    requestBody:
+      contentType: application/json
+      payload:
+        text: $steps.writeStory.outputs.story
+        language: $inputs.language
+        speed: $inputs.speed
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      audio: $response.body#/audio
+      duration: $response.body#/duration
+  outputs:
+    story: $steps.writeStory.outputs.story
+    coverImage: $steps.illustrate.outputs.coverImage
+    audio: $steps.narrate.outputs.audio
