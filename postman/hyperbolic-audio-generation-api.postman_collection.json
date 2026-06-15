@@ -1,0 +1,322 @@
+{
+  "info": {
+    "_postman_id": "fdf87336-fbf0-4626-b58b-1c08f46dd4d7",
+    "name": "Hyperbolic Audio Generation API",
+    "description": "Convert text to natural-sounding speech using audio models hosted by Hyperbolic \u2014 Melo TTS (sunset) and Whisper (coming soon). Returns base64-encoded audio. Pricing from $0.001 per 1000 characters.\n\n\nContact Support:\n Name: Hyperbolic Support\n Email: support@hyperbolic.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:09:51.000Z",
+    "updatedAt": "2026-06-05T15:09:51.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-fdf87336-fbf0-4626-b58b-1c08f46dd4d7"
+  },
+  "item": [
+    {
+      "name": "audio",
+      "item": [
+        {
+          "name": "generation",
+          "item": [
+            {
+              "name": "Hyperbolic Generate Audio",
+              "id": "92b13d68-5eda-45e3-a95f-995c96c1ac7b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"speed\": 1,\n  \"language\": \"EN\",\n  \"voice\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/audio/generation",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "audio",
+                    "generation"
+                  ]
+                },
+                "description": "Generate speech audio from text using the selected TTS model.\n"
+              },
+              "response": [
+                {
+                  "id": "2b14f484-71d0-467b-85c3-ea735d7ab80b",
+                  "name": "Successful audio generation",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"text\": \"<string>\",\n  \"speed\": 1,\n  \"language\": \"EN\",\n  \"voice\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"audio\": \"<string>\",\n  \"duration\": \"<number>\"\n}",
+                  "createdAt": "2026-06-05T15:09:51.000Z",
+                  "updatedAt": "2026-06-05T15:09:51.000Z",
+                  "uid": "35240-2b14f484-71d0-467b-85c3-ea735d7ab80b"
+                },
+                {
+                  "id": "1eff4967-9233-48e4-b519-492a526fd3ae",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"text\": \"<string>\",\n  \"speed\": 1,\n  \"language\": \"EN\",\n  \"voice\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:09:51.000Z",
+                  "updatedAt": "2026-06-05T15:09:51.000Z",
+                  "uid": "35240-1eff4967-9233-48e4-b519-492a526fd3ae"
+                },
+                {
+                  "id": "d7f1bdd8-60b7-4bb8-b362-179f36fcb14c",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"text\": \"<string>\",\n  \"speed\": 1,\n  \"language\": \"EN\",\n  \"voice\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:09:51.000Z",
+                  "updatedAt": "2026-06-05T15:09:51.000Z",
+                  "uid": "35240-d7f1bdd8-60b7-4bb8-b362-179f36fcb14c"
+                },
+                {
+                  "id": "1f685a43-5398-4ecb-93b6-7eba56178f74",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"text\": \"<string>\",\n  \"speed\": 1,\n  \"language\": \"EN\",\n  \"voice\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:09:51.000Z",
+                  "updatedAt": "2026-06-05T15:09:51.000Z",
+                  "uid": "35240-1f685a43-5398-4ecb-93b6-7eba56178f74"
+                }
+              ],
+              "createdAt": "2026-06-05T15:09:51.000Z",
+              "updatedAt": "2026-06-05T15:09:51.000Z",
+              "uid": "35240-92b13d68-5eda-45e3-a95f-995c96c1ac7b"
+            }
+          ],
+          "id": "164b3cc8-53d9-4c3f-8c60-5305895d30a6",
+          "createdAt": "2026-06-05T15:09:51.000Z",
+          "updatedAt": "2026-06-05T15:09:51.000Z",
+          "uid": "35240-164b3cc8-53d9-4c3f-8c60-5305895d30a6"
+        }
+      ],
+      "id": "1ea4cc1e-c455-4695-ae60-f37f89b686f5",
+      "createdAt": "2026-06-05T15:09:51.000Z",
+      "updatedAt": "2026-06-05T15:09:51.000Z",
+      "uid": "35240-1ea4cc1e-c455-4695-ae60-f37f89b686f5"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.hyperbolic.xyz/v1"
+    }
+  ]
+}

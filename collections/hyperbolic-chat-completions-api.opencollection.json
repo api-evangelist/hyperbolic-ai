@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hyperbolic Chat Completions API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Chat Completions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hyperbolic Create A Chat Completion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hyperbolic.xyz/v1/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a chat completion using one of the open-source LLMs served by Hyperbolic. The request and response shape is fully OpenAI-compatible: send a list of messages with role (`system`, `user`, `assistant`, `tool`) and content (text or, for vision models, image_url blocks). Streaming is enabled by setting `stream: true`. Tool calling, structured outputs (`response_format`), and reasoning models (DeepSeek R1) are supported.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

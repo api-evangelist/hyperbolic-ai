@@ -1,0 +1,162 @@
+{
+  "item": [
+    {
+      "id": "d6a317a5-6734-4574-bcda-189f322afcb1",
+      "name": "Models",
+      "description": {
+        "content": "List available inference models",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f6906fa-149b-4031-be41-3cdc56b6048f",
+          "name": "Hyperbolic List Models",
+          "request": {
+            "name": "Hyperbolic List Models",
+            "description": {
+              "content": "List all models currently available for inference.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "18f10569-2ab1-4c13-bd7d-a19bdc47bf38",
+              "name": "Successful model list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 5195,\n      \"owned_by\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"created\": 387,\n      \"owned_by\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a429879-2b32-4e64-bcce-88d9d4844e92",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hyperbolic.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c9490f65-ee27-4719-9ddb-cdc0e197ff37",
+    "name": "Hyperbolic Models API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAI-compatible model catalog. Returns the live list of models served by Hyperbolic for inference — chat, base completion, image, vision, and audio.\n\n\nContact Support:\n Name: Hyperbolic Support\n Email: support@hyperbolic.ai",
+      "type": "text/plain"
+    }
+  }
+}

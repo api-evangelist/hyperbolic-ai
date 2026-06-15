@@ -1,0 +1,293 @@
+{
+  "item": [
+    {
+      "id": "cfa50692-ed7d-420c-9d45-d2249059d472",
+      "name": "Completions",
+      "description": {
+        "content": "Legacy base-model text completion endpoint",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d740228a-0e88-48a6-ad2c-002d9f7f90dc",
+          "name": "Hyperbolic Create A Completion",
+          "request": {
+            "name": "Hyperbolic Create A Completion",
+            "description": {
+              "content": "Generate a text completion for a prompt against a base (non-instruct) model. Primarily used for the Llama-3.1-405B-Base BF16 and FP8 variants unique to Hyperbolic.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"stream\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"presence_penalty\": \"<number>\",\n  \"frequency_penalty\": \"<number>\",\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a20c98c-a9a3-4ed7-b7ca-50c98b563a92",
+              "name": "Successful completion response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"meta-llama/Meta-Llama-3.1-405B\",\n  \"prompt\": \"The three laws of robotics are:\",\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"text_completion\",\n  \"created\": 5197,\n  \"model\": \"string\",\n  \"choices\": [\n    {\n      \"index\": 8051,\n      \"text\": \"string\",\n      \"finish_reason\": \"stop\"\n    },\n    {\n      \"index\": 3944,\n      \"text\": \"string\",\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 8351,\n    \"completion_tokens\": 4842,\n    \"total_tokens\": 7351\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39294c45-af03-4703-a6b9-c944dbbb981f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"meta-llama/Meta-Llama-3.1-405B\",\n  \"prompt\": \"The three laws of robotics are:\",\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3163945a-2d06-4480-aebc-90a5aa8261d7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"meta-llama/Meta-Llama-3.1-405B\",\n  \"prompt\": \"The three laws of robotics are:\",\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfc7ebfa-dd2c-4551-89f1-9cb0779bb63f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"meta-llama/Meta-Llama-3.1-405B\",\n  \"prompt\": \"The three laws of robotics are:\",\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hyperbolic.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a936e074-afcc-49ac-8595-4e560ebaf7e2",
+    "name": "Hyperbolic Completions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Legacy OpenAI-compatible text completions endpoint for prompting base (non-instruct) models. Hyperbolic is the only public provider serving `meta-llama/Meta-Llama-3.1-405B` (base) in BF16 for high-throughput precision and FP8 for ultra-low-latency.\n\n\nContact Support:\n Name: Hyperbolic Support\n Email: support@hyperbolic.ai",
+      "type": "text/plain"
+    }
+  }
+}

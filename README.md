@@ -1,118 +1,223 @@
 # Hyperbolic (hyperbolic-ai)
+
 Hyperbolic is an open-access AI cloud and decentralized GPU marketplace serving 200,000+ builders with affordable inference and bare-metal compute. The platform combines a serverless OpenAI-compatible inference API spanning 25+ open-source LLMs (including the only public Llama-3.1-405B-Base in BF16), image and audio models, with an on-demand GPU rental marketplace aggregating idle H100 / H200 / A100 / RTX 4090 capacity from third-party suppliers at 3-10x lower cost than hyperscalers. Reserved clusters, dedicated endpoints, an OpenAI-drop-in Python and TypeScript SDK, a Go CLI, an MCP server, the Hyperbolic AgentKit, the open-source Hyper-dOS distributed operating system, and Coinbase x402 crypto payments round out the stack.
 
-**URL:** [Visit APIs.json](https://raw.githubusercontent.com/api-evangelist/hyperbolic-ai/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/hyperbolic-ai/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/hyperbolic-ai/refs/heads/main/apis.yml)
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## Scope
+
+- **Position:** Consuming
+- **Access:** 3rd-Party
 
 ## Tags
 
- - AI, Artificial Intelligence, Compute, Decentralized, DePIN, GPU, Image Generation, Inference, LLM, Marketplace, Open Source
+- AI
+- Artificial Intelligence
+- Compute
+- Decentralized
+- DePIN
+- GPU
+- Image Generation
+- Inference
+- LLM
+- Marketplace
+- Open Source
 
 ## Timestamps
 
 - **Created:** 2026-05-25
 - **Modified:** 2026-05-25
 
-## Base URL
-
-`https://api.hyperbolic.xyz/v1` — OpenAI-compatible. Authenticate with `Authorization: Bearer <YOUR_API_KEY>`. Issue keys at [app.hyperbolic.ai/settings/api-keys](https://app.hyperbolic.ai/settings/api-keys).
-
-## Pricing Snapshot
-
-| Surface | Model / SKU | Unit | Price |
-|---|---|---|---|
-| Inference (chat) | Llama 3.1 405B Instruct | per 1M tokens | $4.00 |
-| Inference (chat) | DeepSeek R1 | per 1M tokens | $3.00 |
-| Inference (chat) | Llama 3.3 70B | per 1M tokens | $0.40 |
-| Inference (chat) | 7B/8B class floor | per 1M tokens | $0.10 |
-| Inference (vision) | Llama 3.2 / Qwen2-VL floor | per 1M tokens | $0.15 |
-| Image | SDXL / SD3.5 / FLUX (sunset) | per image | from $0.0025 |
-| Audio | Melo TTS (sunset) | per 1000 chars | from $0.001 |
-| GPU On-Demand | RTX 4090 | per GPU/hr | $0.50 |
-| GPU On-Demand | A100 | per GPU/hr | $1.80 |
-| GPU On-Demand | H100 (marketplace entry) | per GPU/hr | $1.39 |
-| GPU On-Demand | H100 (dedicated) | per GPU/hr | $3.20 |
-| Reserved Clusters | 3-12 month commitment | — | up to 40% off on-demand |
-| Marketplace fee | Platform commission | percent | 10% |
-
-## Tiers
-
-| Tier | RPM | Minimum Deposit | Support |
-|---|---|---|---|
-| Basic | 60 | $0 | Community |
-| Pro | 600 | $5+ | Priority + Email |
-| Enterprise | Unlimited | Contract | 24/7 Dedicated |
-
 ## APIs
 
 ### Hyperbolic Chat Completions API
-OpenAI-compatible `POST /v1/chat/completions`. 25+ open-source LLMs: Llama 3.1 (8B/70B/405B), Qwen 2.5, DeepSeek V3, DeepSeek R1, Hermes 3, Mistral, plus vision (Llama 3.2 Vision, Qwen2-VL). Streaming, tools, structured output, reasoning.
 
-**Human URL:** [https://docs.hyperbolic.ai/inference/overview](https://docs.hyperbolic.ai/inference/overview)
+OpenAI-compatible chat completions endpoint serving 25+ open-source LLMs including Llama 3.1 8B/70B/405B, Qwen 2.5, DeepSeek V3, DeepSeek R1, Hermes 3, Mistral, and vision models (Llama 3.2 Vision, Qwen2-VL). Supports streaming, tool/function calling, structured JSON output, and chain-of-thought reasoning. Drop-in OpenAI replacement — change api_key and base_url to https://api.hyperbolic.xyz/v1.
 
-- [OpenAPI](openapi/hyperbolic-chat-completions-api-openapi.yml)
-- [JSON Schema](json-schema/hyperbolic-chat-completion-schema.json)
-- [JSON-LD](json-ld/hyperbolic-ai-context.jsonld)
-- [Naftiko Capability — Chat Completions](capabilities/inference-chat-completions.yaml)
-- [Example](examples/hyperbolic-chat-completion-example.json)
+- **Human URL:** [https://docs.hyperbolic.ai/inference/overview](https://docs.hyperbolic.ai/inference/overview)
+
+#### Tags
+
+- AI
+- Chat
+- Completions
+- Inference
+- LLM
+
+#### Properties
+
+- [Documentation](https://docs.hyperbolic.ai/inference/overview)
+- [Documentation](https://docs.hyperbolic.ai/inference/chat-completion)
+- [OpenAPI](openapi/hyperbolic-chat-completions-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/hyperbolic-chat-completions-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-chat-completions-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [JSON Schema](json-schema/hyperbolic-chat-completion-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON-LD](json-ld/hyperbolic-ai-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
 
 ### Hyperbolic Completions API
-Legacy `POST /v1/completions` for base-model prompting. Notably exposes `meta-llama/Meta-Llama-3.1-405B` in both BF16 (high-throughput precision) and FP8 (low-latency) — Hyperbolic is the only public provider serving the base model in BF16.
 
-- [OpenAPI](openapi/hyperbolic-completions-api-openapi.yml)
-- [Naftiko Capability — Completions](capabilities/inference-completions.yaml)
+Legacy OpenAI-compatible text completions endpoint for base-model prompting. Notably exposes Llama-3.1-405B-Base in both BF16 (high-throughput precision) and FP8 (low-latency) — Hyperbolic is the only public provider serving the base model in BF16.
+
+- **Human URL:** [https://docs.hyperbolic.ai/inference/overview](https://docs.hyperbolic.ai/inference/overview)
+
+#### Tags
+
+- AI
+- Completions
+- Inference
+- LLM
+
+#### Properties
+
+- [Documentation](https://docs.hyperbolic.ai/inference/overview)
+- [OpenAPI](openapi/hyperbolic-completions-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/hyperbolic-completions-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-completions-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Hyperbolic Image Generation API
-`POST /v1/image/generation` for diffusion text-to-image: SDXL, SD 3.5, FLUX.1 [schnell] / [dev] (sunset), ControlNet, custom LoRAs. Base64-encoded image output.
 
-- [OpenAPI](openapi/hyperbolic-image-generation-api-openapi.yml)
-- [Naftiko Capability — Image Generation](capabilities/inference-image-generation.yaml)
-- [Example](examples/hyperbolic-image-generation-example.json)
+Generate images from text prompts using diffusion models including Stable Diffusion XL, Stable Diffusion 3.5, FLUX.1 [schnell] / [dev] (sunset), and ControlNet variants. Supports custom LoRAs. Pricing from $0.0025 per image. POST /v1/image/generation accepts model_name, prompt, steps, cfg_scale, height, width.
+
+- **Human URL:** [https://docs.hyperbolic.ai/inference/overview](https://docs.hyperbolic.ai/inference/overview)
+
+#### Tags
+
+- AI
+- Diffusion
+- Image Generation
+- Inference
+
+#### Properties
+
+- [Documentation](https://docs.hyperbolic.ai/inference/overview)
+- [OpenAPI](openapi/hyperbolic-image-generation-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/hyperbolic-image-generation-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-image-generation-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Hyperbolic Audio Generation API
-`POST /v1/audio/generation` for text-to-speech using Melo TTS (sunset) and Whisper (coming soon). Base64-encoded audio output.
 
-- [OpenAPI](openapi/hyperbolic-audio-generation-api-openapi.yml)
-- [Naftiko Capability — Audio Generation](capabilities/inference-audio-generation.yaml)
-- [Example](examples/hyperbolic-audio-generation-example.json)
+Convert text to natural-sounding speech using Melo TTS (sunset) and Whisper (coming soon). POST /v1/audio/generation accepts text and speed; returns base64-encoded audio. Pricing from $0.001 per 1000 characters.
+
+- **Human URL:** [https://docs.hyperbolic.ai/inference/overview](https://docs.hyperbolic.ai/inference/overview)
+
+#### Tags
+
+- AI
+- Audio
+- Inference
+- Text To Speech
+
+#### Properties
+
+- [Documentation](https://docs.hyperbolic.ai/inference/overview)
+- [OpenAPI](openapi/hyperbolic-audio-generation-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/hyperbolic-audio-generation-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-audio-generation-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Hyperbolic Models API
-`GET /v1/models` — OpenAI-compatible model catalog covering chat, base completion, image, vision, and audio surfaces.
 
-- [OpenAPI](openapi/hyperbolic-models-api-openapi.yml)
-- [Naftiko Capability — Models](capabilities/inference-models.yaml)
-- [Example](examples/hyperbolic-models-list-example.json)
+OpenAI-compatible model discovery endpoint. GET /v1/models returns the catalog of currently served inference models — chat, base completion, image, vision, and audio — so clients can route requests by capability without hard-coded model IDs.
 
-### Hyperbolic GPU Marketplace
-Decentralized on-demand GPU rental of H100, H200, A100, RTX 4090 capacity sourced from third-party suppliers. Reserved clusters (3-12 month, up to 40% discount) and dedicated single-tenant endpoints. Hyperbolic charges a 10% platform fee on supplier rental income. Managed via the [Console](https://app.hyperbolic.ai/), the [hyperbolic-cli](https://github.com/HyperbolicLabs/hyperbolic-cli), the [hyperbolic-mcp](https://github.com/HyperbolicLabs/hyperbolic-mcp) MCP server, the [Hyperbolic-AgentKit](https://github.com/HyperbolicLabs/Hyperbolic-AgentKit), and the open-source [Hyper-dOS](https://github.com/HyperbolicLabs/Hyper-dOS) distributed operating system.
+- **Human URL:** [https://docs.hyperbolic.ai/inference/overview](https://docs.hyperbolic.ai/inference/overview)
 
-**Human URLs:**
-- [On-Demand Overview](https://docs.hyperbolic.ai/on-demand/overview)
-- [On-Demand Quick Start](https://docs.hyperbolic.ai/on-demand/quickstart)
-- [Reserved Clusters](https://docs.hyperbolic.ai/reserved/overview)
+#### Tags
 
-## GitHub Ecosystem
+- AI
+- Inference
+- Models
 
-| Repo | Purpose |
-|---|---|
-| [Hyper-dOS](https://github.com/HyperbolicLabs/Hyper-dOS) | Distributed Operating System for GPU orchestration (Go) |
-| [Hyperbolic-AgentKit](https://github.com/HyperbolicLabs/Hyperbolic-AgentKit) | Python agent framework |
-| [hyperbolic-cli](https://github.com/HyperbolicLabs/hyperbolic-cli) | Go CLI for marketplace operations |
-| [homebrew-hyperbolic](https://github.com/HyperbolicLabs/homebrew-hyperbolic) | Homebrew tap for hyperbolic-cli |
-| [hyperbolic-mcp](https://github.com/HyperbolicLabs/hyperbolic-mcp) | MCP server for Claude |
-| [hyperbolic-ts](https://github.com/HyperbolicLabs/hyperbolic-ts) | TypeScript open-source projects |
-| [hyperbolic-gradio](https://github.com/HyperbolicLabs/hyperbolic-gradio) | Gradio integration |
-| [hyperbolic-x402](https://github.com/HyperbolicLabs/hyperbolic-x402) | Coinbase x402 chat completions |
-| [jungle.proto](https://github.com/HyperbolicLabs/jungle.proto) | Jungle Protocol |
-| [skypilot](https://github.com/HyperbolicLabs/skypilot) / [skypilot-catalog](https://github.com/HyperbolicLabs/skypilot-catalog) | SkyPilot integration |
-| [inference-benchmarks](https://github.com/HyperbolicLabs/inference-benchmarks) | Inference benchmarking |
-| [feature-requests](https://github.com/HyperbolicLabs/feature-requests) | Public roadmap intake |
+#### Properties
 
-## Commercial Artifacts
+- [Documentation](https://docs.hyperbolic.ai/inference/overview)
+- [OpenAPI](openapi/hyperbolic-models-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/hyperbolic-models-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-models-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-- [Plans](plans/hyperbolic-ai-plans-pricing.yml) — API Commons Plans 0.1
-- [Rate Limits](rate-limits/hyperbolic-ai-rate-limits.yml) — API Commons Rate Limits 0.1
-- [FinOps](finops/hyperbolic-ai-finops.yml) — FOCUS 1.3 aligned
+### Hyperbolic GPU Marketplace API
+
+Decentralized on-demand GPU compute marketplace renting idle H100, H200, A100, and RTX 4090 capacity from third-party suppliers. Pricing starts at $0.50/GPU/hr (RTX 4090), $1.39-$1.49/hr (H100), up to $3.20/hr (H100 dedicated). Up to 75% cheaper than AWS/Azure/GCP. Instances deploy in under one minute. Reserved clusters and dedicated single-tenant endpoints available. Hyperbolic charges a 10% platform fee on rental income. Managed via app.hyperbolic.ai dashboard, the `hyperbolic-cli` Go CLI, the MCP server, and the Hyperbolic AgentKit.
+
+- **Human URL:** [https://docs.hyperbolic.ai/on-demand/overview](https://docs.hyperbolic.ai/on-demand/overview)
+
+#### Tags
+
+- AI
+- Compute
+- GPU
+- Infrastructure
+- Marketplace
+
+#### Properties
+
+- [Documentation](https://docs.hyperbolic.ai/on-demand/overview)
+- [Documentation](https://docs.hyperbolic.ai/on-demand/quickstart)
+- [GitHub Repository](https://github.com/HyperbolicLabs/hyperbolic-cli)
+- [GitHub Repository](https://github.com/HyperbolicLabs/hyperbolic-mcp)
+- [Postman Collection](collections/hyperbolic-audio-generation-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-audio-generation-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/hyperbolic-chat-completions-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-chat-completions-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/hyperbolic-completions-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-completions-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/hyperbolic-image-generation-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-image-generation-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/hyperbolic-models-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/hyperbolic-models-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
+- [Portal](https://www.hyperbolic.ai/)
+- [Documentation](https://docs.hyperbolic.ai/)
+- [Documentation](https://docs.hyperbolic.ai/overview)
+- [Documentation](https://docs.hyperbolic.ai/overview/platform-comparison)
+- [Documentation](https://docs.hyperbolic.ai/inference/overview)
+- [Getting Started](https://docs.hyperbolic.ai/inference/quickstart)
+- [Documentation](https://docs.hyperbolic.ai/on-demand/overview)
+- [Getting Started](https://docs.hyperbolic.ai/on-demand/quickstart)
+- [Documentation](https://docs.hyperbolic.ai/reserved/overview)
+- [Sign Up](https://app.hyperbolic.ai/)
+- [Documentation](https://app.hyperbolic.ai/settings/api-keys)
+- [Sandbox](https://app.hyperbolic.ai/models)
+- [Blog](https://www.hyperbolic.ai/blog)
+- [About Us](https://www.hyperbolic.ai/about)
+- [Careers](https://www.hyperbolic.ai/careers)
+- [Careers](https://jobs.ashbyhq.com/hyperbolic)
+- [Press Kit](https://www.hyperbolic.ai/media-kit)
+- [Privacy Policy](https://www.hyperbolic.ai/privacy-policy)
+- [Terms of Service](https://www.hyperbolic.ai/terms-of-use)
+- [Contact Form](mailto:contact@hyperbolic.ai)
+- [Contact Form](mailto:sales@hyperbolic.ai)
+- [Support](mailto:support@hyperbolic.ai)
+- [Contact Form](https://calendly.com/d/cq79-jyv-jg4/hyperbolic-sales-demo)
+- [Twitter](https://twitter.com/hyperbolic_labs)
+- [LinkedIn](https://www.linkedin.com/company/hyperbolic-labs/)
+- [YouTube](https://www.youtube.com/@hyperboliclabs)
+- [GitHub Organization](https://github.com/HyperbolicLabs)
+- [Open Source Project](https://github.com/HyperbolicLabs/Hyper-dOS)
+- [SDK](https://github.com/HyperbolicLabs/Hyperbolic-AgentKit)
+- [SDK](https://github.com/HyperbolicLabs/hyperbolic-ts)
+- [Tool](https://github.com/HyperbolicLabs/hyperbolic-mcp)
+- [Tool](https://github.com/HyperbolicLabs/hyperbolic-cli)
+- [Tool](https://github.com/HyperbolicLabs/homebrew-hyperbolic)
+- [SDK](https://github.com/HyperbolicLabs/hyperbolic-gradio)
+- [Tool](https://github.com/HyperbolicLabs/hyperbolic-x402)
+- [Tool](https://github.com/HyperbolicLabs/skypilot)
+- [Tool](https://github.com/HyperbolicLabs/skypilot-catalog)
+- [Open Source Project](https://github.com/HyperbolicLabs/jungle.proto)
+- [Code Examples](https://github.com/HyperbolicLabs/inference-benchmarks)
+- [Forum](https://github.com/HyperbolicLabs/feature-requests)
+- [Documentation](https://huggingface.co/docs/inference-providers/en/providers/hyperbolic)
+- [Api Base U R L](https://api.hyperbolic.xyz/v1)
+- [Plans](plans/hyperbolic-ai-plans-pricing.yml)
+- [Rate Limits](rate-limits/hyperbolic-ai-rate-limits.yml)
+- [Fin Ops](finops/hyperbolic-ai-finops.yml)
 - [Vocabulary](vocabulary/hyperbolic-ai-vocabulary.yml)
-- [Spectral Ruleset](rules/hyperbolic-ai-rules.yml)
+- [Spectral Rules](rules/hyperbolic-ai-rules.yml)
+- [Features](undefined)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** info@apievangelist.com
+**URL:** https://apievangelist.com

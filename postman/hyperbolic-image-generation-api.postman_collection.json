@@ -1,0 +1,322 @@
+{
+  "info": {
+    "_postman_id": "0bfb3a90-0aae-46c4-b967-765069ee749d",
+    "name": "Hyperbolic Image Generation API",
+    "description": "Generate images from text prompts using diffusion models hosted by Hyperbolic \u2014 Stable Diffusion XL, Stable Diffusion 3.5, FLUX.1 [schnell] and FLUX.1 [dev] (sunset), and ControlNet variants. Custom LoRA support. Pricing starts at $0.0025 per image.\n\n\nContact Support:\n Name: Hyperbolic Support\n Email: support@hyperbolic.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:09:50.000Z",
+    "updatedAt": "2026-06-05T15:09:50.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0bfb3a90-0aae-46c4-b967-765069ee749d"
+  },
+  "item": [
+    {
+      "name": "image",
+      "item": [
+        {
+          "name": "generation",
+          "item": [
+            {
+              "name": "Hyperbolic Generate An Image",
+              "id": "0630d009-6a89-45b0-85c0-73d99ee58241",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model_name\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"lora\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/image/generation",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "image",
+                    "generation"
+                  ]
+                },
+                "description": "Generate one or more images from a text prompt using the specified diffusion model. Returns base64-encoded images in the `images` array.\n"
+              },
+              "response": [
+                {
+                  "id": "96c38e5c-0605-487a-8a22-302b706e0377",
+                  "name": "Successful image generation",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model_name\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"lora\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/image/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "image",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"images\": [\n    {\n      \"image\": \"<string>\",\n      \"seed\": \"<integer>\"\n    },\n    {\n      \"image\": \"<string>\",\n      \"seed\": \"<integer>\"\n    }\n  ],\n  \"inference_time\": \"<number>\"\n}",
+                  "createdAt": "2026-06-05T15:09:50.000Z",
+                  "updatedAt": "2026-06-05T15:09:50.000Z",
+                  "uid": "35240-96c38e5c-0605-487a-8a22-302b706e0377"
+                },
+                {
+                  "id": "832334a9-cf2b-4132-a203-725856778f89",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model_name\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"lora\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/image/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "image",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:09:50.000Z",
+                  "updatedAt": "2026-06-05T15:09:50.000Z",
+                  "uid": "35240-832334a9-cf2b-4132-a203-725856778f89"
+                },
+                {
+                  "id": "5bfee425-6e0f-433e-8a85-e41ab6185ffe",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model_name\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"lora\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/image/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "image",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:09:50.000Z",
+                  "updatedAt": "2026-06-05T15:09:50.000Z",
+                  "uid": "35240-5bfee425-6e0f-433e-8a85-e41ab6185ffe"
+                },
+                {
+                  "id": "029e213f-9461-4e1c-8275-160d83d4faaf",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model_name\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"lora\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/image/generation",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "image",
+                        "generation"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-06-05T15:09:50.000Z",
+                  "updatedAt": "2026-06-05T15:09:50.000Z",
+                  "uid": "35240-029e213f-9461-4e1c-8275-160d83d4faaf"
+                }
+              ],
+              "createdAt": "2026-06-05T15:09:50.000Z",
+              "updatedAt": "2026-06-05T15:09:50.000Z",
+              "uid": "35240-0630d009-6a89-45b0-85c0-73d99ee58241"
+            }
+          ],
+          "id": "5397259a-3e68-4046-9c5f-998ef32741f0",
+          "createdAt": "2026-06-05T15:09:50.000Z",
+          "updatedAt": "2026-06-05T15:09:50.000Z",
+          "uid": "35240-5397259a-3e68-4046-9c5f-998ef32741f0"
+        }
+      ],
+      "id": "17010781-d961-4542-9938-d52c584c83a7",
+      "createdAt": "2026-06-05T15:09:50.000Z",
+      "updatedAt": "2026-06-05T15:09:50.000Z",
+      "uid": "35240-17010781-d961-4542-9938-d52c584c83a7"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.hyperbolic.xyz/v1"
+    }
+  ]
+}

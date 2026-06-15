@@ -1,0 +1,402 @@
+{
+  "item": [
+    {
+      "id": "a4d55065-fa13-4224-b6e7-82d67398192a",
+      "name": "Chat Completions",
+      "description": {
+        "content": "Generate chat-style completions from open-source LLMs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "31275e70-f035-410d-b181-5b2af4b5e643",
+          "name": "Hyperbolic Create A Chat Completion",
+          "request": {
+            "name": "Hyperbolic Create A Chat Completion",
+            "description": {
+              "content": "Create a chat completion using one of the open-source LLMs served by Hyperbolic. The request and response shape is fully OpenAI-compatible: send a list of messages with role (`system`, `user`, `assistant`, `tool`) and content (text or, for vision models, image_url blocks). Streaming is enabled by setting `stream: true`. Tool calling, structured outputs (`response_format`), and reasoning models (DeepSeek R1) are supported.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        {\n          \"id\": \"<string>\",\n          \"type\": \"<string>\",\n          \"function\": {\n            \"name\": \"<string>\",\n            \"arguments\": \"<string>\"\n          }\n        },\n        {\n          \"id\": \"<string>\",\n          \"type\": \"<string>\",\n          \"function\": {\n            \"name\": \"<string>\",\n            \"arguments\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"n\": 1,\n  \"stream\": false,\n  \"stop\": \"<string>\",\n  \"presence_penalty\": \"<number>\",\n  \"frequency_penalty\": \"<number>\",\n  \"seed\": \"<integer>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": \"<object>\"\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": \"<object>\"\n      }\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"user\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f8741ba2-000d-4baf-9e34-06b8f1a96d74",
+              "name": "Successful chat completion response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"deepseek-ai/DeepSeek-V3\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the capital of France?\"\n    }\n  ],\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"chatcmpl-abc123\",\n  \"object\": \"chat.completion\",\n  \"created\": 1748133600,\n  \"model\": \"deepseek-ai/DeepSeek-V3\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"The capital of France is Paris.\"\n      },\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 12,\n    \"completion_tokens\": 7,\n    \"total_tokens\": 19\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e494bcb-70f7-4a53-a09a-98d20f765ac3",
+              "name": "Bad Request — invalid model, parameters, or message structure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"deepseek-ai/DeepSeek-V3\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the capital of France?\"\n    }\n  ],\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcee215c-a328-4ea2-9af7-73b537b17057",
+              "name": "Unauthorized — missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"deepseek-ai/DeepSeek-V3\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the capital of France?\"\n    }\n  ],\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf9b5212-3935-477c-8810-f0486ab3b0ad",
+              "name": "Payment Required — account balance exhausted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"deepseek-ai/DeepSeek-V3\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the capital of France?\"\n    }\n  ],\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7d93bb5-83c4-40e0-a60a-b8ec8aa69db9",
+              "name": "Too Many Requests — rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"deepseek-ai/DeepSeek-V3\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the capital of France?\"\n    }\n  ],\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a051220d-3430-4c2c-929c-b4498e65438e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"deepseek-ai/DeepSeek-V3\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the capital of France?\"\n    }\n  ],\n  \"max_tokens\": 256,\n  \"temperature\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hyperbolic.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0b37a4da-f944-4f09-a382-77f9d0341f16",
+    "name": "Hyperbolic Chat Completions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAI-compatible chat completions endpoint for the Hyperbolic Serverless Inference service. Serves 25+ open-source LLMs including Llama 3.1 8B/70B/405B, Qwen 2.5, DeepSeek V3, DeepSeek R1, Hermes 3, Mistral, and multimodal vision models (Llama 3.2 Vision, Qwen2-VL). Supports streaming, function/tool calling, structured JSON output, and chain-of-thought reasoning models. Drop-in OpenAI SDK replacement — change `api_key` and `base_url` only.\n\n\nContact Support:\n Name: Hyperbolic Support\n Email: support@hyperbolic.ai",
+      "type": "text/plain"
+    }
+  }
+}

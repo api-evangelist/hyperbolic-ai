@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hyperbolic Audio Generation API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audio Generation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hyperbolic Generate Audio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.hyperbolic.xyz/v1/audio/generation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate speech audio from text using the selected TTS model.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

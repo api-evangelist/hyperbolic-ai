@@ -1,0 +1,298 @@
+{
+  "item": [
+    {
+      "id": "9e226c6a-c9d5-4588-b148-a63e87a80704",
+      "name": "Image Generation",
+      "description": {
+        "content": "Text-to-image diffusion endpoint",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ccde861e-96b5-42ef-930c-b15f1d2b31ec",
+          "name": "Hyperbolic Generate An Image",
+          "request": {
+            "name": "Hyperbolic Generate An Image",
+            "description": {
+              "content": "Generate one or more images from a text prompt using the specified diffusion model. Returns base64-encoded images in the `images` array.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "image",
+                "generation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model_name\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"negative_prompt\": \"<string>\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024,\n  \"seed\": \"<integer>\",\n  \"n\": 1,\n  \"lora\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b30ad04d-a32a-4162-aadc-ea769684e607",
+              "name": "Successful image generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model_name\": \"SDXL1.0-base\",\n  \"prompt\": \"A photorealistic cyberpunk cat wearing sunglasses\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"images\": [\n    {\n      \"image\": \"string\",\n      \"seed\": 2368\n    },\n    {\n      \"image\": \"string\",\n      \"seed\": 8341\n    }\n  ],\n  \"inference_time\": 4946.100163233197\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "613bc2d5-7278-4b5b-9f98-b25cb8a0c8b7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model_name\": \"SDXL1.0-base\",\n  \"prompt\": \"A photorealistic cyberpunk cat wearing sunglasses\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f67b31e-f2b6-4e33-a699-eb5eae5d77cd",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model_name\": \"SDXL1.0-base\",\n  \"prompt\": \"A photorealistic cyberpunk cat wearing sunglasses\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3ce6e6f-a177-4446-9e42-36c0debe8c97",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "image",
+                    "generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model_name\": \"SDXL1.0-base\",\n  \"prompt\": \"A photorealistic cyberpunk cat wearing sunglasses\",\n  \"steps\": 30,\n  \"cfg_scale\": 7.5,\n  \"height\": 1024,\n  \"width\": 1024\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\",\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.hyperbolic.xyz/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5807698-d2f0-48d3-83ce-f6905daad847",
+    "name": "Hyperbolic Image Generation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Generate images from text prompts using diffusion models hosted by Hyperbolic — Stable Diffusion XL, Stable Diffusion 3.5, FLUX.1 [schnell] and FLUX.1 [dev] (sunset), and ControlNet variants. Custom LoRA support. Pricing starts at $0.0025 per image.\n\n\nContact Support:\n Name: Hyperbolic Support\n Email: support@hyperbolic.ai",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,308 @@
+{
+  "info": {
+    "_postman_id": "18f60b13-6ed3-4405-bf99-d37f2d150373",
+    "name": "Hyperbolic Completions API",
+    "description": "Legacy OpenAI-compatible text completions endpoint for prompting base (non-instruct) models. Hyperbolic is the only public provider serving `meta-llama/Meta-Llama-3.1-405B` (base) in BF16 for high-throughput precision and FP8 for ultra-low-latency.\n\n\nContact Support:\n Name: Hyperbolic Support\n Email: support@hyperbolic.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:09:49.000Z",
+    "updatedAt": "2026-06-05T15:09:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-18f60b13-6ed3-4405-bf99-d37f2d150373"
+  },
+  "item": [
+    {
+      "name": "completions",
+      "item": [
+        {
+          "name": "Hyperbolic Create A Completion",
+          "id": "f2fe974d-b918-4eea-828b-42b1d8d44ad2",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"stream\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"presence_penalty\": \"<number>\",\n  \"frequency_penalty\": \"<number>\",\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/completions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "completions"
+              ]
+            },
+            "description": "Generate a text completion for a prompt against a base (non-instruct) model. Primarily used for the Llama-3.1-405B-Base BF16 and FP8 variants unique to Hyperbolic.\n"
+          },
+          "response": [
+            {
+              "id": "37af553f-7628-41d4-8394-4dbb10b3ee26",
+              "name": "Successful completion response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"stream\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"presence_penalty\": \"<number>\",\n  \"frequency_penalty\": \"<number>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"object\": \"text_completion\",\n  \"created\": \"<integer>\",\n  \"model\": \"<string>\",\n  \"choices\": [\n    {\n      \"index\": \"<integer>\",\n      \"text\": \"<string>\",\n      \"finish_reason\": \"length\"\n    },\n    {\n      \"index\": \"<integer>\",\n      \"text\": \"<string>\",\n      \"finish_reason\": \"length\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": \"<integer>\",\n    \"completion_tokens\": \"<integer>\",\n    \"total_tokens\": \"<integer>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:09:49.000Z",
+              "updatedAt": "2026-06-05T15:09:49.000Z",
+              "uid": "35240-37af553f-7628-41d4-8394-4dbb10b3ee26"
+            },
+            {
+              "id": "6af4411b-b68b-4799-8f25-fb32beea7b50",
+              "name": "Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"stream\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"presence_penalty\": \"<number>\",\n  \"frequency_penalty\": \"<number>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:09:49.000Z",
+              "updatedAt": "2026-06-05T15:09:49.000Z",
+              "uid": "35240-6af4411b-b68b-4799-8f25-fb32beea7b50"
+            },
+            {
+              "id": "eac252a2-500b-46d4-a37b-f8e459dd47b8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"stream\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"presence_penalty\": \"<number>\",\n  \"frequency_penalty\": \"<number>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:09:49.000Z",
+              "updatedAt": "2026-06-05T15:09:49.000Z",
+              "uid": "35240-eac252a2-500b-46d4-a37b-f8e459dd47b8"
+            },
+            {
+              "id": "b4cd3b31-cd62-4abf-b27b-ff8707c4bed0",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"stream\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"presence_penalty\": \"<number>\",\n  \"frequency_penalty\": \"<number>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"message\": \"<string>\",\n    \"type\": \"<string>\",\n    \"code\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-06-05T15:09:49.000Z",
+              "updatedAt": "2026-06-05T15:09:49.000Z",
+              "uid": "35240-b4cd3b31-cd62-4abf-b27b-ff8707c4bed0"
+            }
+          ],
+          "createdAt": "2026-06-05T15:09:49.000Z",
+          "updatedAt": "2026-06-05T15:09:49.000Z",
+          "uid": "35240-f2fe974d-b918-4eea-828b-42b1d8d44ad2"
+        }
+      ],
+      "id": "ccdbc795-f941-44a0-a0d7-d09d9bbd4def",
+      "createdAt": "2026-06-05T15:09:49.000Z",
+      "updatedAt": "2026-06-05T15:09:49.000Z",
+      "uid": "35240-ccdbc795-f941-44a0-a0d7-d09d9bbd4def"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.hyperbolic.xyz/v1"
+    }
+  ]
+}
