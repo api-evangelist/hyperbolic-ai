@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/hyperbolic-audio-generation-api-openapi.yml, openapi/hyperbolic-chat-completions-api-openapi.yml,
+  openapi/hyperbolic-completions-api-openapi.yml, openapi/hyperbolic-image-generation-api-openapi.yml,
+  openapi/hyperbolic-models-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: API Key
+  sources:
+  - openapi/hyperbolic-audio-generation-api-openapi.yml
+  - openapi/hyperbolic-chat-completions-api-openapi.yml
+  - openapi/hyperbolic-completions-api-openapi.yml
+  - openapi/hyperbolic-image-generation-api-openapi.yml
+  - openapi/hyperbolic-models-api-openapi.yml

@@ -1,0 +1,34 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.hyperbolic.ai
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 26 05:42:00 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: docs.hyperbolic.ai
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  5 23:50:22 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: api.hyperbolic.xyz
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 27 13:04:04 2026 GMT
+  hsts: null
+domains:
+- domain: hyperbolic.ai
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none
+- domain: hyperbolic.xyz
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none
