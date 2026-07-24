@@ -1,10 +1,9 @@
 openapi: 3.1.0
 info:
   title: Hyperbolic Audio Generation API
-  description: >
-    Convert text to natural-sounding speech using audio models hosted by
-    Hyperbolic — Melo TTS (sunset) and Whisper (coming soon). Returns
-    base64-encoded audio. Pricing from $0.001 per 1000 characters.
+  description: 'Convert text to natural-sounding speech using audio models hosted by Hyperbolic — Melo TTS (sunset) and Whisper (coming soon). Returns base64-encoded audio. Pricing from $0.001 per 1000 characters.
+
+    '
   version: v1
   contact:
     name: Hyperbolic Support
@@ -13,27 +12,24 @@ info:
   license:
     name: Hyperbolic Terms of Use
     url: https://www.hyperbolic.ai/terms-of-use
-
 servers:
-  - url: https://api.hyperbolic.xyz/v1
-    description: Hyperbolic Production Inference Server
-
+- url: https://api.hyperbolic.xyz/v1
+  description: Hyperbolic Production Inference Server
 security:
-  - BearerAuth: []
-
+- BearerAuth: []
 tags:
-  - name: Audio Generation
-    description: Text-to-speech audio endpoint
-
+- name: Audio Generation
+  description: Text-to-speech audio endpoint
 paths:
   /audio/generation:
     post:
       summary: Hyperbolic Generate Audio
-      description: >
-        Generate speech audio from text using the selected TTS model.
+      description: 'Generate speech audio from text using the selected TTS model.
+
+        '
       operationId: generateAudio
       tags:
-        - Audio Generation
+      - Audio Generation
       requestBody:
         required: true
         content:
@@ -72,19 +68,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: API Key
-
   schemas:
     AudioGenerationRequest:
       type: object
       required:
-        - text
+      - text
       properties:
         text:
           type: string
@@ -101,7 +90,6 @@ components:
         voice:
           type: string
           description: Speaker / voice ID for the selected model.
-
     AudioGenerationResponse:
       type: object
       properties:
@@ -111,7 +99,6 @@ components:
         duration:
           type: number
           description: Audio length in seconds.
-
     ErrorResponse:
       type: object
       properties:
@@ -124,3 +111,8 @@ components:
               type: string
             code:
               type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key

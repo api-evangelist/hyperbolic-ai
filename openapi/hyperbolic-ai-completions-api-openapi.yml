@@ -1,11 +1,9 @@
 openapi: 3.1.0
 info:
-  title: Hyperbolic Completions API
-  description: >
-    Legacy OpenAI-compatible text completions endpoint for prompting base
-    (non-instruct) models. Hyperbolic is the only public provider serving
-    `meta-llama/Meta-Llama-3.1-405B` (base) in BF16 for high-throughput
-    precision and FP8 for ultra-low-latency.
+  title: Hyperbolic Audio Generation Completions API
+  description: 'Convert text to natural-sounding speech using audio models hosted by Hyperbolic — Melo TTS (sunset) and Whisper (coming soon). Returns base64-encoded audio. Pricing from $0.001 per 1000 characters.
+
+    '
   version: v1
   contact:
     name: Hyperbolic Support
@@ -14,29 +12,24 @@ info:
   license:
     name: Hyperbolic Terms of Use
     url: https://www.hyperbolic.ai/terms-of-use
-
 servers:
-  - url: https://api.hyperbolic.xyz/v1
-    description: Hyperbolic Production Inference Server
-
+- url: https://api.hyperbolic.xyz/v1
+  description: Hyperbolic Production Inference Server
 security:
-  - BearerAuth: []
-
+- BearerAuth: []
 tags:
-  - name: Completions
-    description: Legacy base-model text completion endpoint
-
+- name: Completions
+  description: Legacy base-model text completion endpoint
 paths:
   /completions:
     post:
       summary: Hyperbolic Create A Completion
-      description: >
-        Generate a text completion for a prompt against a base (non-instruct)
-        model. Primarily used for the Llama-3.1-405B-Base BF16 and FP8 variants
-        unique to Hyperbolic.
+      description: 'Generate a text completion for a prompt against a base (non-instruct) model. Primarily used for the Llama-3.1-405B-Base BF16 and FP8 variants unique to Hyperbolic.
+
+        '
       operationId: createCompletion
       tags:
-        - Completions
+      - Completions
       requestBody:
         required: true
         content:
@@ -76,30 +69,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: API Key
-
   schemas:
     CompletionRequest:
       type: object
       required:
-        - model
-        - prompt
+      - model
+      - prompt
       properties:
         model:
           type: string
           description: Base model ID (e.g. `meta-llama/Meta-Llama-3.1-405B`).
         prompt:
           oneOf:
-            - type: string
-            - type: array
-              items:
-                type: string
+          - type: string
+          - type: array
+            items:
+              type: string
         max_tokens:
           type: integer
           minimum: 1
@@ -120,17 +106,25 @@ components:
           type: boolean
         stop:
           oneOf:
-            - type: string
-            - type: array
-              items:
-                type: string
+          - type: string
+          - type: array
+            items:
+              type: string
         presence_penalty:
           type: number
         frequency_penalty:
           type: number
         seed:
           type: integer
-
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
     CompletionResponse:
       type: object
       properties:
@@ -139,7 +133,7 @@ components:
         object:
           type: string
           enum:
-            - text_completion
+          - text_completion
         created:
           type: integer
         model:
@@ -156,21 +150,10 @@ components:
               finish_reason:
                 type: string
                 enum:
-                  - stop
-                  - length
+                - stop
+                - length
         usage:
           $ref: '#/components/schemas/Usage'
-
-    Usage:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-
     ErrorResponse:
       type: object
       properties:
@@ -183,3 +166,8 @@ components:
               type: string
             code:
               type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
