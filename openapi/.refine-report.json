@@ -1,0 +1,22 @@
+{
+  "provider": "hyperbolic-ai",
+  "sources": [
+    "hyperbolic-ai-audio-generation-api-openapi.yml",
+    "hyperbolic-ai-chat-completions-api-openapi.yml",
+    "hyperbolic-ai-completions-api-openapi.yml",
+    "hyperbolic-ai-image-generation-api-openapi.yml",
+    "hyperbolic-ai-models-api-openapi.yml"
+  ],
+  "outputs": [
+    "hyperbolic-ai-audio-generation-api-openapi.yml",
+    "hyperbolic-ai-chat-completions-api-openapi.yml",
+    "hyperbolic-ai-completions-api-openapi.yml",
+    "hyperbolic-ai-image-generation-api-openapi.yml",
+    "hyperbolic-ai-models-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,164 @@
+openapi: 3.1.0
+info:
+  title: Hyperbolic Image Generation API
+  description: >
+    Generate images from text prompts using diffusion models hosted by
+    Hyperbolic — Stable Diffusion XL, Stable Diffusion 3.5, FLUX.1 [schnell]
+    and FLUX.1 [dev] (sunset), and ControlNet variants. Custom LoRA support.
+    Pricing starts at $0.0025 per image.
+  version: v1
+  contact:
+    name: Hyperbolic Support
+    email: support@hyperbolic.ai
+    url: https://docs.hyperbolic.ai
+  license:
+    name: Hyperbolic Terms of Use
+    url: https://www.hyperbolic.ai/terms-of-use
+
+servers:
+  - url: https://api.hyperbolic.xyz/v1
+    description: Hyperbolic Production Inference Server
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Image Generation
+    description: Text-to-image diffusion endpoint
+
+paths:
+  /image/generation:
+    post:
+      summary: Hyperbolic Generate An Image
+      description: >
+        Generate one or more images from a text prompt using the specified
+        diffusion model. Returns base64-encoded images in the `images` array.
+      operationId: generateImage
+      tags:
+        - Image Generation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerationRequest'
+            examples:
+              SDXLBasic:
+                summary: Basic SDXL generation
+                value:
+                  model_name: SDXL1.0-base
+                  prompt: A photorealistic cyberpunk cat wearing sunglasses
+                  steps: 30
+                  cfg_scale: 7.5
+                  height: 1024
+                  width: 1024
+      responses:
+        '200':
+          description: Successful image generation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+
+  schemas:
+    ImageGenerationRequest:
+      type: object
+      required:
+        - model_name
+        - prompt
+      properties:
+        model_name:
+          type: string
+          description: >
+            Image model identifier — e.g. `SDXL1.0-base`, `SD3.5`,
+            `FLUX.1-dev` (sunset), `FLUX.1-schnell` (sunset),
+            `ControlNet-SDXL`.
+        prompt:
+          type: string
+        negative_prompt:
+          type: string
+        steps:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 30
+        cfg_scale:
+          type: number
+          minimum: 1
+          maximum: 20
+          default: 7.5
+        height:
+          type: integer
+          minimum: 64
+          maximum: 2048
+          default: 1024
+        width:
+          type: integer
+          minimum: 64
+          maximum: 2048
+          default: 1024
+        seed:
+          type: integer
+        n:
+          type: integer
+          minimum: 1
+          maximum: 4
+          default: 1
+        lora:
+          type: object
+          description: Custom LoRA configuration when supported by the model.
+
+    ImageGenerationResponse:
+      type: object
+      properties:
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              image:
+                type: string
+                description: Base64-encoded image bytes.
+              seed:
+                type: integer
+        inference_time:
+          type: number
+          description: Seconds spent in inference.
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string

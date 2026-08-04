@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: Hyperbolic Audio Generation API
+  description: >
+    Convert text to natural-sounding speech using audio models hosted by
+    Hyperbolic — Melo TTS (sunset) and Whisper (coming soon). Returns
+    base64-encoded audio. Pricing from $0.001 per 1000 characters.
+  version: v1
+  contact:
+    name: Hyperbolic Support
+    email: support@hyperbolic.ai
+    url: https://docs.hyperbolic.ai
+  license:
+    name: Hyperbolic Terms of Use
+    url: https://www.hyperbolic.ai/terms-of-use
+
+servers:
+  - url: https://api.hyperbolic.xyz/v1
+    description: Hyperbolic Production Inference Server
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Audio Generation
+    description: Text-to-speech audio endpoint
+
+paths:
+  /audio/generation:
+    post:
+      summary: Hyperbolic Generate Audio
+      description: >
+        Generate speech audio from text using the selected TTS model.
+      operationId: generateAudio
+      tags:
+        - Audio Generation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AudioGenerationRequest'
+            examples:
+              BasicTTS:
+                summary: Basic TTS request
+                value:
+                  text: Hello and welcome to Hyperbolic.
+                  speed: 1.0
+                  language: EN
+      responses:
+        '200':
+          description: Successful audio generation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioGenerationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+
+  schemas:
+    AudioGenerationRequest:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          description: Input text to convert to speech.
+        speed:
+          type: number
+          minimum: 0.5
+          maximum: 2.0
+          default: 1.0
+        language:
+          type: string
+          description: Language code (e.g. EN, ES, FR, JA, ZH, KR).
+          default: EN
+        voice:
+          type: string
+          description: Speaker / voice ID for the selected model.
+
+    AudioGenerationResponse:
+      type: object
+      properties:
+        audio:
+          type: string
+          description: Base64-encoded audio bytes (typically WAV or MP3).
+        duration:
+          type: number
+          description: Audio length in seconds.
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string

@@ -1,0 +1,185 @@
+openapi: 3.1.0
+info:
+  title: Hyperbolic Completions API
+  description: >
+    Legacy OpenAI-compatible text completions endpoint for prompting base
+    (non-instruct) models. Hyperbolic is the only public provider serving
+    `meta-llama/Meta-Llama-3.1-405B` (base) in BF16 for high-throughput
+    precision and FP8 for ultra-low-latency.
+  version: v1
+  contact:
+    name: Hyperbolic Support
+    email: support@hyperbolic.ai
+    url: https://docs.hyperbolic.ai
+  license:
+    name: Hyperbolic Terms of Use
+    url: https://www.hyperbolic.ai/terms-of-use
+
+servers:
+  - url: https://api.hyperbolic.xyz/v1
+    description: Hyperbolic Production Inference Server
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Completions
+    description: Legacy base-model text completion endpoint
+
+paths:
+  /completions:
+    post:
+      summary: Hyperbolic Create A Completion
+      description: >
+        Generate a text completion for a prompt against a base (non-instruct)
+        model. Primarily used for the Llama-3.1-405B-Base BF16 and FP8 variants
+        unique to Hyperbolic.
+      operationId: createCompletion
+      tags:
+        - Completions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+            examples:
+              Base405B:
+                summary: Llama-3.1-405B base BF16
+                value:
+                  model: meta-llama/Meta-Llama-3.1-405B
+                  prompt: 'The three laws of robotics are:'
+                  max_tokens: 256
+                  temperature: 0.7
+      responses:
+        '200':
+          description: Successful completion response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+
+  schemas:
+    CompletionRequest:
+      type: object
+      required:
+        - model
+        - prompt
+      properties:
+        model:
+          type: string
+          description: Base model ID (e.g. `meta-llama/Meta-Llama-3.1-405B`).
+        prompt:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        max_tokens:
+          type: integer
+          minimum: 1
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 2
+        top_p:
+          type: number
+          minimum: 0
+          maximum: 1
+        top_k:
+          type: integer
+        n:
+          type: integer
+          minimum: 1
+        stream:
+          type: boolean
+        stop:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        presence_penalty:
+          type: number
+        frequency_penalty:
+          type: number
+        seed:
+          type: integer
+
+    CompletionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          enum:
+            - text_completion
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              text:
+                type: string
+              finish_reason:
+                type: string
+                enum:
+                  - stop
+                  - length
+        usage:
+          $ref: '#/components/schemas/Usage'
+
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
