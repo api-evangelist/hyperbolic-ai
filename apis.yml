@@ -4,6 +4,12 @@ apis:
 - aid: hyperbolic-ai:hyperbolic-marketplace-api
   name: Hyperbolic GPU Marketplace API
   tags:
+  - Artificial Intelligence
+  - Compute
+  - GPU
+  - Infrastructure
+  - Marketplace
+  tags_raw:
   - AI
   - Compute
   - GPU
@@ -82,6 +88,8 @@ apis:
   description: Text-to-image diffusion endpoint
   humanURL: https://docs.hyperbolic.ai/inference/overview
   tags:
+  - Image-Generation
+  tags_raw:
   - Image Generation
   properties:
   - type: OpenAPI
@@ -113,6 +121,17 @@ apis:
     url: json-ld/hyperbolic-ai-context.jsonld
 name: Hyperbolic
 tags:
+  - Artificial Intelligence
+  - Compute
+  - Decentralized
+  - DePIN
+  - GPU
+  - Image-Generation
+  - Inference
+  - LLM
+  - Marketplace
+  - Open-Source
+tags_raw:
   - AI
   - Artificial Intelligence
   - Compute
