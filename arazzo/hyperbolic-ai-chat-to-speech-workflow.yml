@@ -10,11 +10,11 @@ info:
     credential so the flow reads and runs without opening the OpenAPI sources.
   version: 1.0.0
 sourceDescriptions:
-- name: chatCompletionsApi
-  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
-  type: openapi
 - name: audioGenerationApi
-  url: ../openapi/hyperbolic-audio-generation-api-openapi.yml
+  url: ../openapi/hyperbolic-ai-audio-generation-api-openapi.yml
+  type: openapi
+- name: chatCompletionsApi
+  url: ../openapi/hyperbolic-ai-chat-completions-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: chat-to-speech

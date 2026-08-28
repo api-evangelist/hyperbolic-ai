@@ -11,11 +11,11 @@ info:
     credential so the flow reads and runs without opening the OpenAPI sources.
   version: 1.0.0
 sourceDescriptions:
-- name: imageGenerationApi
-  url: ../openapi/hyperbolic-image-generation-api-openapi.yml
-  type: openapi
 - name: chatCompletionsApi
-  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  url: ../openapi/hyperbolic-ai-chat-completions-api-openapi.yml
+  type: openapi
+- name: imageGenerationApi
+  url: ../openapi/hyperbolic-ai-image-generation-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: image-prompt-qa

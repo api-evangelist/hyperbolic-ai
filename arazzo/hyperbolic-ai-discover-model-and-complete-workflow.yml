@@ -10,11 +10,11 @@ info:
     and inline Authorization Bearer credential.
   version: 1.0.0
 sourceDescriptions:
-- name: modelsApi
-  url: ../openapi/hyperbolic-models-api-openapi.yml
-  type: openapi
 - name: completionsApi
-  url: ../openapi/hyperbolic-completions-api-openapi.yml
+  url: ../openapi/hyperbolic-ai-completions-api-openapi.yml
+  type: openapi
+- name: modelsApi
+  url: ../openapi/hyperbolic-ai-models-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: discover-model-and-complete

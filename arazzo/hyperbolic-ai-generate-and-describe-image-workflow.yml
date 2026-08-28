@@ -11,14 +11,14 @@ info:
     opening the OpenAPI sources.
   version: 1.0.0
 sourceDescriptions:
-- name: imageGenerationApi
-  url: ../openapi/hyperbolic-image-generation-api-openapi.yml
+- name: audioGenerationApi
+  url: ../openapi/hyperbolic-ai-audio-generation-api-openapi.yml
   type: openapi
 - name: chatCompletionsApi
-  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  url: ../openapi/hyperbolic-ai-chat-completions-api-openapi.yml
   type: openapi
-- name: audioGenerationApi
-  url: ../openapi/hyperbolic-audio-generation-api-openapi.yml
+- name: imageGenerationApi
+  url: ../openapi/hyperbolic-ai-image-generation-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: generate-and-describe-image

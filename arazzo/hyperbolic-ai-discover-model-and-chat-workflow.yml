@@ -11,11 +11,11 @@ info:
     descriptions.
   version: 1.0.0
 sourceDescriptions:
-- name: modelsApi
-  url: ../openapi/hyperbolic-models-api-openapi.yml
-  type: openapi
 - name: chatCompletionsApi
-  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  url: ../openapi/hyperbolic-ai-chat-completions-api-openapi.yml
+  type: openapi
+- name: modelsApi
+  url: ../openapi/hyperbolic-ai-models-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: discover-model-and-chat

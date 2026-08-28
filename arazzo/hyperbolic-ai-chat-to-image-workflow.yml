@@ -12,10 +12,10 @@ info:
   version: 1.0.0
 sourceDescriptions:
 - name: chatCompletionsApi
-  url: ../openapi/hyperbolic-chat-completions-api-openapi.yml
+  url: ../openapi/hyperbolic-ai-chat-completions-api-openapi.yml
   type: openapi
 - name: imageGenerationApi
-  url: ../openapi/hyperbolic-image-generation-api-openapi.yml
+  url: ../openapi/hyperbolic-ai-image-generation-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: chat-to-image
