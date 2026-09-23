@@ -1,9 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hyperbolic Audio Generation Image Generation API
-  description: 'Convert text to natural-sounding speech using audio models hosted by Hyperbolic — Melo TTS (sunset) and Whisper (coming soon). Returns base64-encoded audio. Pricing from $0.001 per 1000 characters.
-
-    '
+  title: Hyperbolic Image Generation API
+  description: Generate images from text prompts using diffusion models hosted by Hyperbolic — Stable Diffusion XL, Stable Diffusion 3.5, FLUX.1 [schnell] and FLUX.1 [dev] (sunset), and ControlNet variants. Custom LoRA support. Pricing starts at $0.0025 per image.
   version: v1
   contact:
     name: Hyperbolic Support
@@ -24,9 +22,7 @@ paths:
   /image/generation:
     post:
       summary: Hyperbolic Generate An Image
-      description: 'Generate one or more images from a text prompt using the specified diffusion model. Returns base64-encoded images in the `images` array.
-
-        '
+      description: Generate one or more images from a text prompt using the specified diffusion model. Returns base64-encoded images in the `images` array.
       operationId: generateImage
       tags:
       - Image Generation
@@ -73,22 +69,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ImageGenerationResponse:
-      type: object
-      properties:
-        images:
-          type: array
-          items:
-            type: object
-            properties:
-              image:
-                type: string
-                description: Base64-encoded image bytes.
-              seed:
-                type: integer
-        inference_time:
-          type: number
-          description: Seconds spent in inference.
     ImageGenerationRequest:
       type: object
       required:
@@ -146,6 +126,22 @@ components:
               type: string
             code:
               type: string
+    ImageGenerationResponse:
+      type: object
+      properties:
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              image:
+                type: string
+                description: Base64-encoded image bytes.
+              seed:
+                type: integer
+        inference_time:
+          type: number
+          description: Seconds spent in inference.
   securitySchemes:
     BearerAuth:
       type: http

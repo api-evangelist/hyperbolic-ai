@@ -1,9 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Hyperbolic Audio Generation API
-  description: 'Convert text to natural-sounding speech using audio models hosted by Hyperbolic — Melo TTS (sunset) and Whisper (coming soon). Returns base64-encoded audio. Pricing from $0.001 per 1000 characters.
-
-    '
+  description: Convert text to natural-sounding speech using audio models hosted by Hyperbolic — Melo TTS (sunset) and Whisper (coming soon). Returns base64-encoded audio. Pricing from $0.001 per 1000 characters.
   version: v1
   contact:
     name: Hyperbolic Support
@@ -24,9 +22,7 @@ paths:
   /audio/generation:
     post:
       summary: Hyperbolic Generate Audio
-      description: 'Generate speech audio from text using the selected TTS model.
-
-        '
+      description: Generate speech audio from text using the selected TTS model.
       operationId: generateAudio
       tags:
       - Audio Generation

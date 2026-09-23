@@ -1,11 +1,11 @@
 {
   "provider": "hyperbolic-ai",
   "sources": [
-    "hyperbolic-ai-audio-generation-api-openapi.yml",
-    "hyperbolic-ai-chat-completions-api-openapi.yml",
-    "hyperbolic-ai-completions-api-openapi.yml",
-    "hyperbolic-ai-image-generation-api-openapi.yml",
-    "hyperbolic-ai-models-api-openapi.yml"
+    "_original/hyperbolic-audio-generation-api-openapi.yml",
+    "_original/hyperbolic-chat-completions-api-openapi.yml",
+    "_original/hyperbolic-completions-api-openapi.yml",
+    "_original/hyperbolic-image-generation-api-openapi.yml",
+    "_original/hyperbolic-models-api-openapi.yml"
   ],
   "outputs": [
     "hyperbolic-ai-audio-generation-api-openapi.yml",
@@ -17,6 +17,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (5 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "hyperbolic-audio-generation-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "hyperbolic-chat-completions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "hyperbolic-completions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "hyperbolic-image-generation-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "hyperbolic-models-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "hyperbolic-ai-audio-generation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hyperbolic-ai-chat-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hyperbolic-ai-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hyperbolic-ai-image-generation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hyperbolic-ai-models-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
