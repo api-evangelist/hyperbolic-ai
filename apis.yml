@@ -88,9 +88,10 @@ apis:
   description: Text-to-image diffusion endpoint
   humanURL: https://docs.hyperbolic.ai/inference/overview
   tags:
-  - Image-Generation
+  - Image Generation
   tags_raw:
   - Image Generation
+  - Image-Generation
   properties:
   - type: OpenAPI
     url: openapi/hyperbolic-ai-image-generation-api-openapi.yml
@@ -126,11 +127,11 @@ tags:
   - Decentralized
   - DePIN
   - GPU
-  - Image-Generation
+  - Image Generation
   - Inference
   - LLM
   - Marketplace
-  - Open-Source
+  - Open Source
 tags_raw:
   - AI
   - Artificial Intelligence
@@ -143,6 +144,8 @@ tags_raw:
   - LLM
   - Marketplace
   - Open Source
+  - Image-Generation
+  - Open-Source
 kind: contract
 deliveryModel:
   model: open-core

@@ -55,6 +55,17 @@ components:
           type: integer
         owned_by:
           type: string
+    ModelList:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
     ErrorResponse:
       type: object
       properties:
@@ -67,17 +78,6 @@ components:
               type: string
             code:
               type: string
-    ModelList:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - list
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Model'
   securitySchemes:
     BearerAuth:
       type: http

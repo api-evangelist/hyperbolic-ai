@@ -66,6 +66,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
     AudioGenerationRequest:
       type: object
       required:
@@ -95,18 +107,6 @@ components:
         duration:
           type: number
           description: Audio length in seconds.
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            code:
-              type: string
   securitySchemes:
     BearerAuth:
       type: http

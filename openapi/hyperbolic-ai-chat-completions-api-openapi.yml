@@ -138,6 +138,49 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ToolCall:
+      type: object
+      required:
+      - id
+      - type
+      - function
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - function
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+            arguments:
+              type: string
+              description: JSON-encoded argument string.
+    Tool:
+      type: object
+      required:
+      - type
+      - function
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+        function:
+          type: object
+          required:
+          - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            parameters:
+              type: object
+              description: JSON Schema describing the function arguments.
     ChatCompletionRequest:
       type: object
       required:
@@ -224,27 +267,44 @@ components:
         user:
           type: string
           description: End-user identifier for abuse monitoring.
-    ToolCall:
+    ContentPart:
       type: object
       required:
-      - id
       - type
-      - function
       properties:
-        id:
-          type: string
         type:
           type: string
           enum:
-          - function
-        function:
+          - text
+          - image_url
+        text:
+          type: string
+        image_url:
           type: object
           properties:
-            name:
+            url:
               type: string
-            arguments:
+              description: Public URL or `data:` URI for image input on vision models.
+            detail:
               type: string
-              description: JSON-encoded argument string.
+              enum:
+              - auto
+              - low
+              - high
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
+            param:
+              type: string
     ChatMessage:
       type: object
       required:
@@ -272,29 +332,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ToolCall'
-    Usage:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            code:
-              type: string
-            param:
-              type: string
     ChatCompletionResponse:
       type: object
       required:
@@ -323,28 +360,6 @@ components:
           $ref: '#/components/schemas/Usage'
         system_fingerprint:
           type: string
-    Tool:
-      type: object
-      required:
-      - type
-      - function
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-        function:
-          type: object
-          required:
-          - name
-          properties:
-            name:
-              type: string
-            description:
-              type: string
-            parameters:
-              type: object
-              description: JSON Schema describing the function arguments.
     ChatCompletionChoice:
       type: object
       properties:
@@ -359,30 +374,15 @@ components:
           - length
           - tool_calls
           - content_filter
-    ContentPart:
+    Usage:
       type: object
-      required:
-      - type
       properties:
-        type:
-          type: string
-          enum:
-          - text
-          - image_url
-        text:
-          type: string
-        image_url:
-          type: object
-          properties:
-            url:
-              type: string
-              description: Public URL or `data:` URI for image input on vision models.
-            detail:
-              type: string
-              enum:
-              - auto
-              - low
-              - high
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
   securitySchemes:
     BearerAuth:
       type: http
