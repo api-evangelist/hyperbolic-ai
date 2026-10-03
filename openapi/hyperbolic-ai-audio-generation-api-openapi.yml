@@ -66,6 +66,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    AudioGenerationResponse:
+      type: object
+      properties:
+        audio:
+          type: string
+          description: Base64-encoded audio bytes (typically WAV or MP3).
+        duration:
+          type: number
+          description: Audio length in seconds.
     ErrorResponse:
       type: object
       properties:
@@ -98,15 +107,6 @@ components:
         voice:
           type: string
           description: Speaker / voice ID for the selected model.
-    AudioGenerationResponse:
-      type: object
-      properties:
-        audio:
-          type: string
-          description: Base64-encoded audio bytes (typically WAV or MP3).
-        duration:
-          type: number
-          description: Audio length in seconds.
   securitySchemes:
     BearerAuth:
       type: http
