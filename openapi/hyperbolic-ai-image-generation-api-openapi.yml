@@ -69,22 +69,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ImageGenerationResponse:
-      type: object
-      properties:
-        images:
-          type: array
-          items:
-            type: object
-            properties:
-              image:
-                type: string
-                description: Base64-encoded image bytes.
-              seed:
-                type: integer
-        inference_time:
-          type: number
-          description: Seconds spent in inference.
     ImageGenerationRequest:
       type: object
       required:
@@ -130,6 +114,22 @@ components:
         lora:
           type: object
           description: Custom LoRA configuration when supported by the model.
+    ImageGenerationResponse:
+      type: object
+      properties:
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              image:
+                type: string
+                description: Base64-encoded image bytes.
+              seed:
+                type: integer
+        inference_time:
+          type: number
+          description: Seconds spent in inference.
     ErrorResponse:
       type: object
       properties:

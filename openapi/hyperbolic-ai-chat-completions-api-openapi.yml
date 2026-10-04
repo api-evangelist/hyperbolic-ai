@@ -138,15 +138,48 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Usage:
+    ChatCompletionResponse:
+      type: object
+      required:
+      - id
+      - object
+      - created
+      - model
+      - choices
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          enum:
+          - chat.completion
+        created:
+          type: integer
+          description: Unix epoch seconds.
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+        usage:
+          $ref: '#/components/schemas/Usage'
+        system_fingerprint:
+          type: string
+    ChatCompletionChoice:
       type: object
       properties:
-        prompt_tokens:
+        index:
           type: integer
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
+        message:
+          $ref: '#/components/schemas/ChatMessage'
+        finish_reason:
+          type: string
+          enum:
+          - stop
+          - length
+          - tool_calls
+          - content_filter
     ChatCompletionRequest:
       type: object
       required:
@@ -233,42 +266,6 @@ components:
         user:
           type: string
           description: End-user identifier for abuse monitoring.
-    Tool:
-      type: object
-      required:
-      - type
-      - function
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-        function:
-          type: object
-          required:
-          - name
-          properties:
-            name:
-              type: string
-            description:
-              type: string
-            parameters:
-              type: object
-              description: JSON Schema describing the function arguments.
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-            code:
-              type: string
-            param:
-              type: string
     ChatMessage:
       type: object
       required:
@@ -320,6 +317,20 @@ components:
               - auto
               - low
               - high
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+            code:
+              type: string
+            param:
+              type: string
     ToolCall:
       type: object
       required:
@@ -341,48 +352,37 @@ components:
             arguments:
               type: string
               description: JSON-encoded argument string.
-    ChatCompletionResponse:
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    Tool:
       type: object
       required:
-      - id
-      - object
-      - created
-      - model
-      - choices
+      - type
+      - function
       properties:
-        id:
-          type: string
-        object:
+        type:
           type: string
           enum:
-          - chat.completion
-        created:
-          type: integer
-          description: Unix epoch seconds.
-        model:
-          type: string
-        choices:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChatCompletionChoice'
-        usage:
-          $ref: '#/components/schemas/Usage'
-        system_fingerprint:
-          type: string
-    ChatCompletionChoice:
-      type: object
-      properties:
-        index:
-          type: integer
-        message:
-          $ref: '#/components/schemas/ChatMessage'
-        finish_reason:
-          type: string
-          enum:
-          - stop
-          - length
-          - tool_calls
-          - content_filter
+          - function
+        function:
+          type: object
+          required:
+          - name
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            parameters:
+              type: object
+              description: JSON Schema describing the function arguments.
   securitySchemes:
     BearerAuth:
       type: http
