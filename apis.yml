@@ -1,5 +1,8 @@
 aid: hyperbolic-ai
 url: https://raw.githubusercontent.com/api-evangelist/hyperbolic-ai/refs/heads/main/apis.yml
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 apis:
 - aid: hyperbolic-ai:hyperbolic-marketplace-api
   name: Hyperbolic GPU Marketplace API
