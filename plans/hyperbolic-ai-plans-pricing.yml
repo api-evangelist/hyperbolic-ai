@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-05-25 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-05-25'
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -294,3 +299,148 @@ plans:
         unit: 1
         price: '10'
         userMultiplied: false
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - metered
+  - revenue-share
+  - tiered
+  units:
+  - compute
+  - money
+  - object
+  - request
+  - token
+  plans:
+  - name: Basic
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - request
+    periods:
+    - minute
+  - name: Pro
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - money
+    - request
+    periods:
+    - minute
+    - per-use
+  - name: Enterprise
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - request
+    periods:
+    - minute
+  - name: Llama 3.1 405B Inference
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - token
+    periods:
+    - per-use
+  - name: DeepSeek R1 Inference
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - token
+    periods:
+    - per-use
+  - name: Llama 3.3 70B Inference
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - token
+    periods:
+    - per-use
+  - name: Small LLMs Inference
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - token
+    periods:
+    - per-use
+  - name: Vision Models Inference
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - token
+    periods:
+    - per-use
+  - name: Image Generation
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - object
+    periods:
+    - per-use
+  - name: Audio TTS
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - other
+    periods:
+    - per-use
+  - name: GPU On-Demand — RTX 4090
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - hour
+  - name: GPU On-Demand — A100
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - hour
+  - name: GPU On-Demand — H100
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - hour
+  - name: GPU On-Demand — H200
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    periods:
+    - hour
+  - name: Reserved Clusters
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - money
+    periods:
+    - per-use
+  - name: Marketplace Platform Fee
+    access: partner
+    model: revenue-share
+    model_how: stated
+    units:
+    - money
+    periods:
+    - per-use
