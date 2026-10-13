@@ -1,0 +1,23 @@
+edges:
+- partner_name: OpenAI
+  partner: openai
+  partner_match: domain
+  type: contract
+  channel: provider-built
+  relationship: compatible
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/hyperbolic-ai/blob/main/openapi/hyperbolic-ai-chat-completions-api-openapi.yml#L4
+  contract_reference:
+    repo: hyperbolic-ai
+    spec_file: hyperbolic-ai-chat-completions-api-openapi.yml
+    property: description
+    value: OpenAI-compatible
+    note: 'hyperbolic-ai declares OpenAI compatibility: ''description: OpenAI-compatible chat completions endpoint
+      for the Hyperbolic Serverless Inference service. Serves 25+ open-source LLMs including Llama 3.1 8B/70B'''
+    detected_by: sweep-model-routing.py
+    detected: '2026-10-13'
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+generated: '2026-10-13'
+method: searched
+checked: []
