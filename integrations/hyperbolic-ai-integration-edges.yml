@@ -18,46 +18,6 @@ edges:
     detected: '2026-10-13'
   detected_by: sweep-model-routing.py
   first_seen: '2026-10-13'
-- partner_name: LiteLLM
-  partner: litellm
-  partner_match: router
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: system-coverage
-  evidence: https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json
-  coverage_role:
-  - provider
-  router_signals:
-    provider:
-      models: 16
-      router_ids:
-      - hyperbolic
-      tools_share: 1.0
-      structured_output_share: 0.0
-  matched_by: verified-token-table
-  detected_by: sweep-model-routing.py
-  first_seen: '2026-10-13'
-  x-moved-from: hyperbolic (consolidated into hyperbolic-ai 2026-10-13, approved by Kin Lane)
-- partner_name: Portkey
-  partner: portkey
-  partner_match: router
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: system-coverage
-  evidence: https://github.com/Portkey-AI/gateway/tree/main/src/providers/hyperbolic
-  coverage_role:
-  - provider
-  router_signals:
-    provider:
-      models: null
-      router_ids:
-      - hyperbolic
-  matched_by: verified-token-table
-  detected_by: sweep-model-routing.py
-  first_seen: '2026-10-13'
-  x-moved-from: hyperbolic (consolidated into hyperbolic-ai 2026-10-13, approved by Kin Lane)
 generated: '2026-10-13'
 method: searched
 checked: []
