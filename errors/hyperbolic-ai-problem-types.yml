@@ -1,0 +1,52 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/hyperbolic-ai-audio-generation-api-openapi.yml
+- openapi/hyperbolic-ai-chat-completions-api-openapi.yml
+- openapi/hyperbolic-ai-completions-api-openapi.yml
+- openapi/hyperbolic-ai-image-generation-api-openapi.yml
+- openapi/hyperbolic-ai-models-api-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: ErrorResponse
+coverage:
+  operations: 5
+  statuses_declared: 5
+problems:
+- status: 400
+  title: Bad Request
+  description: Bad Request
+  operations: 4
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 401
+  title: Unauthorized
+  description: Unauthorized
+  operations: 5
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 402
+  title: Payment Required
+  description: Payment Required — account balance exhausted
+  operations: 1
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 429
+  title: Too Many Requests
+  description: Too Many Requests
+  operations: 4
+  media_types:
+  - application/json
+  schema: ErrorResponse
+- status: 500
+  title: Internal Server Error
+  description: Internal Server Error
+  operations: 1
+  media_types:
+  - application/json
+  schema: ErrorResponse

@@ -1,129 +1,15 @@
 aid: hyperbolic-ai
+
 url: https://raw.githubusercontent.com/api-evangelist/hyperbolic-ai/refs/heads/main/apis.yml
+
 x-docs-platform: mintlify
+
 x-docs-platform-confidence: medium
+
 x-docs-platform-checked: 2026-10-03
-apis:
-- aid: hyperbolic-ai:hyperbolic-marketplace-api
-  name: Hyperbolic GPU Marketplace API
-  tags:
-  - Artificial Intelligence
-  - Compute
-  - GPU
-  - Infrastructure
-  - Marketplace
-  tags_raw:
-  - AI
-  - Compute
-  - GPU
-  - Infrastructure
-  - Marketplace
-  humanURL: https://docs.hyperbolic.ai/on-demand/overview
-  properties:
-  - url: https://docs.hyperbolic.ai/on-demand/overview
-    type: Documentation
-  - url: https://docs.hyperbolic.ai/on-demand/quickstart
-    type: Documentation
-  - type: GitHubRepository
-    url: https://github.com/HyperbolicLabs/hyperbolic-cli
-  - type: GitHubRepository
-    url: https://github.com/HyperbolicLabs/hyperbolic-mcp
-  description: >-
-    Decentralized on-demand GPU compute marketplace renting idle H100, H200, A100, and RTX 4090 capacity
-    from third-party suppliers. Pricing starts at $0.50/GPU/hr (RTX 4090), $1.39-$1.49/hr (H100), up to
-    $3.20/hr (H100 dedicated). Up to 75% cheaper than AWS/Azure/GCP. Instances deploy in under one minute.
-    Reserved clusters and dedicated single-tenant endpoints available. Hyperbolic charges a 10% platform
-    fee on rental income. Managed via app.hyperbolic.ai dashboard, the `hyperbolic-cli` Go CLI, the MCP
-    server, and the Hyperbolic AgentKit.
-- aid: hyperbolic-ai:hyperbolic-ai-audio-generation-api
-  name: Hyperbolic Audio Generation API
-  description: Text-to-speech audio endpoint
-  humanURL: https://docs.hyperbolic.ai/inference/overview
-  tags:
-  - Audio Generation
-  properties:
-  - type: OpenAPI
-    url: openapi/hyperbolic-ai-audio-generation-api-openapi.yml
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/overview
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/chat-completion
-  - type: JSONSchema
-    url: json-schema/hyperbolic-chat-completion-schema.json
-  - type: JSONLD
-    url: json-ld/hyperbolic-ai-context.jsonld
-- aid: hyperbolic-ai:hyperbolic-ai-chat-completions-api
-  name: Hyperbolic Chat Completions API
-  description: Generate chat-style completions from open-source LLMs
-  humanURL: https://docs.hyperbolic.ai/inference/overview
-  tags:
-  - Chat Completions
-  properties:
-  - type: OpenAPI
-    url: openapi/hyperbolic-ai-chat-completions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/overview
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/chat-completion
-  - type: JSONSchema
-    url: json-schema/hyperbolic-chat-completion-schema.json
-  - type: JSONLD
-    url: json-ld/hyperbolic-ai-context.jsonld
-- aid: hyperbolic-ai:hyperbolic-ai-completions-api
-  name: Hyperbolic Completions API
-  description: Legacy base-model text completion endpoint
-  humanURL: https://docs.hyperbolic.ai/inference/overview
-  tags:
-  - Completions
-  properties:
-  - type: OpenAPI
-    url: openapi/hyperbolic-ai-completions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/overview
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/chat-completion
-  - type: JSONSchema
-    url: json-schema/hyperbolic-chat-completion-schema.json
-  - type: JSONLD
-    url: json-ld/hyperbolic-ai-context.jsonld
-- aid: hyperbolic-ai:hyperbolic-ai-image-generation-api
-  name: Hyperbolic Image Generation API
-  description: Text-to-image diffusion endpoint
-  humanURL: https://docs.hyperbolic.ai/inference/overview
-  tags:
-  - Image Generation
-  tags_raw:
-  - Image Generation
-  - Image-Generation
-  properties:
-  - type: OpenAPI
-    url: openapi/hyperbolic-ai-image-generation-api-openapi.yml
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/overview
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/chat-completion
-  - type: JSONSchema
-    url: json-schema/hyperbolic-chat-completion-schema.json
-  - type: JSONLD
-    url: json-ld/hyperbolic-ai-context.jsonld
-- aid: hyperbolic-ai:hyperbolic-ai-models-api
-  name: Hyperbolic Models API
-  description: List available inference models
-  humanURL: https://docs.hyperbolic.ai/inference/overview
-  tags:
-  - Models
-  properties:
-  - type: OpenAPI
-    url: openapi/hyperbolic-ai-models-api-openapi.yml
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/overview
-  - type: Documentation
-    url: https://docs.hyperbolic.ai/inference/chat-completion
-  - type: JSONSchema
-    url: json-schema/hyperbolic-chat-completion-schema.json
-  - type: JSONLD
-    url: json-ld/hyperbolic-ai-context.jsonld
+
 name: Hyperbolic
+
 tags:
   - Artificial Intelligence
   - Compute
@@ -135,21 +21,9 @@ tags:
   - LLM
   - Marketplace
   - Open Source
-tags_raw:
-  - AI
-  - Artificial Intelligence
-  - Compute
-  - Decentralized
-  - DePIN
-  - GPU
-  - Image Generation
-  - Inference
-  - LLM
-  - Marketplace
-  - Open Source
-  - Image-Generation
-  - Open-Source
+
 kind: contract
+
 deliveryModel:
   model: open-core
   license: MIT
@@ -164,6 +38,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: paid
   onboarding: unknown
@@ -178,9 +53,47 @@ accessModel:
   - security
   generated: '2026-09-03'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/hyperbolic-ai.png
+
 access: 3rd-Party
+
+created: '2026-05-25'
+
+modified: '2026-05-25'
+
+position: Consuming
+
+description: >-
+  Hyperbolic is an open-access AI cloud and decentralized GPU marketplace serving 200,000+ builders with affordable
+  inference and bare-metal compute. The platform combines a serverless OpenAI-compatible inference API spanning 25+
+  open-source LLMs (including the only public Llama-3.1-405B-Base in BF16), image and audio models, with an on-demand
+  GPU rental marketplace aggregating idle H100 / H200 / A100 / RTX 4090 capacity from third-party suppliers at 3-10x
+  lower cost than hyperscalers. Reserved clusters, dedicated endpoints, an OpenAI-drop-in Python and TypeScript SDK, a
+  Go CLI, an MCP server, the Hyperbolic AgentKit, the open-source Hyper-dOS distributed operating system, and Coinbase
+  x402 crypto payments round out the stack.
+
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+    X: apievangelist
+    url: https://apievangelist.com
+
+specificationVersion: '0.23'
+
 common:
+  - type: Spectral
+    url: rules/hyperbolic-ai-rules.yml
+  - type: Spectral
+    url: rules/hyperbolic-ai-jsonschema-spectral-rules.yml
+  - type: DataModel
+    url: data-model/hyperbolic-ai-data-model.yml
+  - type: ErrorCatalog
+    url: errors/hyperbolic-ai-problem-types.yml
+  - type: Conformance
+    url: conformance/hyperbolic-ai-conformance.yml
+  - type: IntegrationEdges
+    url: integrations/hyperbolic-ai-integration-edges.yml
   - type: Website
     url: https://www.hyperbolic.ai/
   - type: IssueTracker
@@ -387,20 +300,193 @@ common:
       - https://github.com/HyperbolicLabs
       - https://huggingface.co/docs/inference-providers/en/providers/hyperbolic
     updated: '2026-05-25'
-created: '2026-05-25'
-modified: '2026-05-25'
-position: Consuming
-description: >-
-  Hyperbolic is an open-access AI cloud and decentralized GPU marketplace serving 200,000+ builders with affordable
-  inference and bare-metal compute. The platform combines a serverless OpenAI-compatible inference API spanning 25+
-  open-source LLMs (including the only public Llama-3.1-405B-Base in BF16), image and audio models, with an on-demand
-  GPU rental marketplace aggregating idle H100 / H200 / A100 / RTX 4090 capacity from third-party suppliers at 3-10x
-  lower cost than hyperscalers. Reserved clusters, dedicated endpoints, an OpenAI-drop-in Python and TypeScript SDK, a
-  Go CLI, an MCP server, the Hyperbolic AgentKit, the open-source Hyper-dOS distributed operating system, and Coinbase
-  x402 crypto payments round out the stack.
-maintainers:
-  - FN: Kin Lane
-    email: info@apievangelist.com
-    X: apievangelist
-    url: https://apievangelist.com
-specificationVersion: '0.23'
+
+apis:
+- aid: hyperbolic-ai:hyperbolic-marketplace-api
+  name: Hyperbolic GPU Marketplace API
+  tags:
+  - Artificial Intelligence
+  - Compute
+  - GPU
+  - Infrastructure
+  - Marketplace
+  tags_raw:
+  - AI
+  - Compute
+  - GPU
+  - Infrastructure
+  - Marketplace
+  humanURL: https://docs.hyperbolic.ai/on-demand/overview
+  properties:
+  - url: https://docs.hyperbolic.ai/on-demand/overview
+    type: Documentation
+  - url: https://docs.hyperbolic.ai/on-demand/quickstart
+    type: Documentation
+  - type: GitHubRepository
+    url: https://github.com/HyperbolicLabs/hyperbolic-cli
+  - type: GitHubRepository
+    url: https://github.com/HyperbolicLabs/hyperbolic-mcp
+  description: >-
+    Decentralized on-demand GPU compute marketplace renting idle H100, H200, A100, and RTX 4090 capacity
+    from third-party suppliers. Pricing starts at $0.50/GPU/hr (RTX 4090), $1.39-$1.49/hr (H100), up to
+    $3.20/hr (H100 dedicated). Up to 75% cheaper than AWS/Azure/GCP. Instances deploy in under one minute.
+    Reserved clusters and dedicated single-tenant endpoints available. Hyperbolic charges a 10% platform
+    fee on rental income. Managed via app.hyperbolic.ai dashboard, the `hyperbolic-cli` Go CLI, the MCP
+    server, and the Hyperbolic AgentKit.
+- aid: hyperbolic-ai:hyperbolic-ai-audio-generation-api
+  name: Hyperbolic Audio Generation API
+  description: Text-to-speech audio endpoint
+  humanURL: https://docs.hyperbolic.ai/inference/overview
+  tags:
+  - Audio Generation
+  properties:
+  - type: OpenAPI
+    url: openapi/hyperbolic-ai-audio-generation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/overview
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/chat-completion
+  - type: JSONSchema
+    url: json-schema/hyperbolic-chat-completion-schema.json
+  - type: JSONLD
+    url: json-ld/hyperbolic-ai-context.jsonld
+- aid: hyperbolic-ai:hyperbolic-ai-chat-completions-api
+  name: Hyperbolic Chat Completions API
+  description: Generate chat-style completions from open-source LLMs
+  humanURL: https://docs.hyperbolic.ai/inference/overview
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/hyperbolic-ai-chat-completions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/overview
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/chat-completion
+  - type: JSONSchema
+    url: json-schema/hyperbolic-chat-completion-schema.json
+  - type: JSONLD
+    url: json-ld/hyperbolic-ai-context.jsonld
+- aid: hyperbolic-ai:hyperbolic-ai-completions-api
+  name: Hyperbolic Completions API
+  description: Legacy base-model text completion endpoint
+  humanURL: https://docs.hyperbolic.ai/inference/overview
+  tags:
+  - Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/hyperbolic-ai-completions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/overview
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/chat-completion
+  - type: JSONSchema
+    url: json-schema/hyperbolic-chat-completion-schema.json
+  - type: JSONLD
+    url: json-ld/hyperbolic-ai-context.jsonld
+- aid: hyperbolic-ai:hyperbolic-ai-image-generation-api
+  name: Hyperbolic Image Generation API
+  description: Text-to-image diffusion endpoint
+  humanURL: https://docs.hyperbolic.ai/inference/overview
+  tags:
+  - Image Generation
+  tags_raw:
+  - Image Generation
+  - Image-Generation
+  properties:
+  - type: OpenAPI
+    url: openapi/hyperbolic-ai-image-generation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/overview
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/chat-completion
+  - type: JSONSchema
+    url: json-schema/hyperbolic-chat-completion-schema.json
+  - type: JSONLD
+    url: json-ld/hyperbolic-ai-context.jsonld
+- aid: hyperbolic-ai:hyperbolic-ai-models-api
+  name: Hyperbolic Models API
+  description: List available inference models
+  humanURL: https://docs.hyperbolic.ai/inference/overview
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/hyperbolic-ai-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/overview
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/inference/chat-completion
+  - type: JSONSchema
+    url: json-schema/hyperbolic-chat-completion-schema.json
+  - type: JSONLD
+    url: json-ld/hyperbolic-ai-context.jsonld
+- aid: hyperbolic-ai:hyperbolic-ai-serverless-inference-api
+  name: Hyperbolic Serverless Inference API
+  description: OpenAI-compatible inference API for 25+ open-source models. Surfaces include text chat, vision, image generation (FLUX, Stable Diffusion, LoRA adapters), and audio (Melo TTS). Pay-as-you-go from $0.0001 per 1K tokens.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.hyperbolic.ai/docs/inference/overview
+  baseURL: https://api.hyperbolic.xyz/v1
+  tags:
+  - Artificial Intelligence
+  - LLM
+  - Chat Completions
+  - Vision
+  - Image Generation
+  - Audio
+  - OpenAI-Compatible
+  tags_raw:
+  - AI
+  - LLM
+  - Chat Completions
+  - Vision
+  - Image Generation
+  - Audio
+  - OpenAI Compatible
+  - Image-Generation
+  properties:
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/
+  - type: GettingStarted
+    url: https://docs.hyperbolic.ai/docs/inference/quickstart
+  - type: Signup
+    url: https://app.hyperbolic.ai/
+  - type: Pricing
+    url: https://hyperbolic.ai/pricing
+  - type: RateLimits
+    url: https://docs.hyperbolic.ai/docs/inference/performance-limits
+  - type: Integrations
+    url: https://docs.hyperbolic.ai/docs/inference/integrations
+  x-moved-from: hyperbolic:inference (consolidated into hyperbolic-ai 2026-10-13, approved by Kin Lane)
+- aid: hyperbolic-ai:hyperbolic-ai-on-demand-gpu-api
+  name: Hyperbolic On-Demand GPU API
+  description: Bare-metal GPU rental with SSH access for full control. Hourly rates from $1.39-$1.99 with no long-term commitments. Reserved clusters available monthly/annually with up to 40% discount.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.hyperbolic.ai/
+  baseURL: https://api.hyperbolic.xyz
+  tags:
+  - GPU
+  - Compute
+  - Infrastructure
+  - SSH
+  properties:
+  - type: Documentation
+    url: https://docs.hyperbolic.ai/
+  - type: Pricing
+    url: https://hyperbolic.ai/pricing
+  x-moved-from: hyperbolic:gpu (consolidated into hyperbolic-ai 2026-10-13, approved by Kin Lane)
+
+tags_raw:
+  - AI
+  - Artificial Intelligence
+  - Compute
+  - Decentralized
+  - DePIN
+  - GPU
+  - Image Generation
+  - Inference
+  - LLM
+  - Marketplace
+  - Open Source
+  - Image-Generation
+  - Open-Source

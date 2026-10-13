@@ -1,0 +1,42 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/hyperbolic-ai-audio-generation-api-openapi.yml
+- openapi/hyperbolic-ai-chat-completions-api-openapi.yml
+- openapi/hyperbolic-ai-completions-api-openapi.yml
+- openapi/hyperbolic-ai-image-generation-api-openapi.yml
+- openapi/hyperbolic-ai-models-api-openapi.yml
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+note: No MCP server was found. No probe result in the dossier. Candidate tools below are derived from the 5 operation(s) in the provider's own
+  OpenAPI (5 listed); they describe what a server WOULD expose, not one that exists.
+tools:
+- name: generate_audio
+  operationId: generateAudio
+  method: POST
+  path: /audio/generation
+  description: Hyperbolic Generate Audio
+- name: create_chat_completion
+  operationId: createChatCompletion
+  method: POST
+  path: /chat/completions
+  description: Hyperbolic Create A Chat Completion
+- name: create_completion
+  operationId: createCompletion
+  method: POST
+  path: /completions
+  description: Hyperbolic Create A Completion
+- name: generate_image
+  operationId: generateImage
+  method: POST
+  path: /image/generation
+  description: Hyperbolic Generate An Image
+- name: list_models
+  operationId: listModels
+  method: GET
+  path: /models
+  description: Hyperbolic List Models
