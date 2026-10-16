@@ -20,6 +20,6 @@
     note: 'hyperbolic-ai declares OpenAI compatibility: ''description: OpenAI-compatible chat completions endpoint
       for the Hyperbolic Serverless Inference service. Serves 25+ open-source LLMs including Llama 3.1 8B/70B'''
     detected_by: sweep-model-routing.py
-    detected: '2026-10-13'
+    detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
