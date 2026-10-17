@@ -41,20 +41,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Model:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Model identifier used in chat/completion requests.
-        object:
-          type: string
-          enum:
-          - model
-        created:
-          type: integer
-        owned_by:
-          type: string
     ModelList:
       type: object
       properties:
@@ -78,6 +64,20 @@ components:
               type: string
             code:
               type: string
+    Model:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Model identifier used in chat/completion requests.
+        object:
+          type: string
+          enum:
+          - model
+        created:
+          type: integer
+        owned_by:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http
